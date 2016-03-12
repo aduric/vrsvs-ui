@@ -15,25 +15,18 @@ var UserShowScreen = React.createBackboneClass({
         }
     },
 
-    handleLike: function(e) {
-        e.preventDefault();
-        var currentLikes = this.props.user.get('likesCount');
-        this.props.user.save({ likesCount: currentLikes + 1 });
-    },
-
     render: function() {
         var user = this.props.user;
-        var username = user.get('username');
-        var avatar = user.get('avatar').url;
-        var likesCount = user.get('likesCount');
+        var name = user.get('name');
+        var text = user.get('text').url;
+        var points = user.get('points');
 
         return (
             <div className="user-container">
-                <h1>{username}'s Profile</h1>
-                <img src={avatar} alt={username} />
-                <p>{likesCount} likes</p>
-                <button className="like-button" onClick={this.handleLike}>
-                    Like
+                <h1>{name}'s Profile</h1>
+                <p>{points} points</p>
+                <button className="challenge-button" onClick={this.handleChallenge}>
+                    Challenge
                 </button>
             </div>
         );

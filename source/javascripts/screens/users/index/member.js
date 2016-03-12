@@ -6,16 +6,16 @@ var ReactBackbone = require('react.backbone');
 var MemberBlock = React.createBackboneClass({
     render: function () {
         var user = this.props.user;
-        var username = user.get('username');
-        var avatar = user.get('avatar').url;
+        var name = user.get('name');
+        var text = user.get('text').url;
         var link = '/users/' + user.get('id');
 
         return (
             <div className="user-block">
                 <a href={link}>
-                    <h2>{username}</h2>
-                    <img src={avatar} alt={username} />
+                    <h2>{name}</h2>
                 </a>
+                <p>{text}</p>
             </div>
         );
     }

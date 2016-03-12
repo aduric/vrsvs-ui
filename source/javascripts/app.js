@@ -3,7 +3,7 @@ var Backbone = require('backbone');
 var Router = require('./router');
 var MainView = require('./screens/main/index');
 
-var UsersController = require('./controllers/users-controller');
+var UsersController = require('./controllers/user');
 
 Backbone.$ = $;
 
