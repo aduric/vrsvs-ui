@@ -1,7 +1,6 @@
-/** @jsx React.DOM */
 var React = require('react');
 var ReactBackbone = require('react.backbone');
-var UserBlock = require('.user-block');
+var UserBlock = require('./user-block');
 
 var UsersIndexScreen = React.createBackboneClass({
     mixins: [

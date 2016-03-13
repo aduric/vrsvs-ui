@@ -1,3 +1,4 @@
+var $ = require('jquery');
 var Backbone = require('backbone');
 
 var Router = require('./router');
@@ -30,7 +31,7 @@ Application.prototype.initialize = function() {
 };
 
 Application.prototype.showApp = function() {
-    this.mainView.render();
+    this.mainView.pageRender();
     Backbone.history.start({ pushState: true });
 };
 

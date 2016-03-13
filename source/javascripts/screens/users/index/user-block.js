@@ -1,9 +1,8 @@
-/** @jsx React.DOM */
 var React = require('react');
 var Backbone = require('backbone');
 var ReactBackbone = require('react.backbone');
 
-var MemberBlock = React.createBackboneClass({
+var UserBlock = React.createBackboneClass({
     render: function () {
         var user = this.props.user;
         var name = user.get('name');

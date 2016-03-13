@@ -1,19 +1,17 @@
-var React = require('react');
 var Backbone = require('backbone');
+var BaseView = require('../../base-view');
+var MainComponent = require('./component');
 
-var BaseView = Backbone.View.extend({
-    initialize: function (options) {
-        this.options = options || {};
-    },
-
+var MainView = BaseView.extend({
     component: function () {
-        return null;
+        return new MainComponent({
+            router: this.options.router
+        });
     },
 
-    render: function () {
-        React.renderComponent(this.component(), this.el);
-        return this;
+    pageRender: function () {
+        $('#main-container').html(this.render());
     }
 });
 
-module.exports = BaseView;
+module.exports = MainView;

@@ -1,4 +1,4 @@
-var UsersCollection = require('../collections/users-collection');
+var UsersCollection = require('../collections/users');
 var UserModel = require('../models/user');
 var UsersIndexView = require('../screens/users/index');
 var UserShowView = require('../screens/users/show');

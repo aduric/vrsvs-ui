@@ -9,4 +9,4 @@ var UsersIndexScreen = BaseView.extend({
     }
 });
 
-module.exports = UsersIndexView;
+module.exports = UsersIndexScreen;

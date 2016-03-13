@@ -1,8 +1,7 @@
-/** @jsx React.DOM */
 var React = require('react');
 var ReactBackbone = require('react.backbone');
 
-var MainComponent = React.createBackboneClass({
+var MainComponent = React.createClass({
     render: function () {
         return (
             <div>

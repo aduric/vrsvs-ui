@@ -9,4 +9,4 @@ var UserView = BaseView.extend({
     }
 });
 
-module.exports = UsersView;
+module.exports = UserView;
