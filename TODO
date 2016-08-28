@@ -1,0 +1,23 @@
+=== 0.0
+
+* Nav [C]
+* Login Flow [C]
+  * Add user to redux state [C]
+* Profile model, managed by AuthService [C]
+* Inject AuthService into components [C]
+* User challenge list [C]
+* Challenge accepted [C]
+* Challenge rejected [C]
+* Challenge accomplished [C]
+* Challenge failed [C]
+* Challenge button [C]
+* Challenges page [C]
+* Add Challenge [C]
+* Clean up IU
+* CI
+
+=== 0.1
+
+* Sync reduxstore localStorage with DB
+
+=== 0.2

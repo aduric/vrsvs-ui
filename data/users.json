@@ -1,0 +1,32 @@
+[
+    {
+        "id": "1",
+        "name":"foo",
+        "text":"I waa win!",
+        "points":0
+    },
+    {
+        "id": "2",
+        "name":"bar",
+        "text":"I wannaa win!",
+        "points":3
+    },
+    {
+        "id": "3",
+        "name":"baz",
+        "text":"win!",
+        "points":1
+    },
+    {
+        "id": "4",
+        "name":"deaner",
+        "text":"win me!",
+        "points":6
+    },
+    {
+        "id": "5",
+        "name":"travis",
+        "text":"juuuu!",
+        "points":0
+    }    
+]
