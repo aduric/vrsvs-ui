@@ -16,6 +16,9 @@ let ChallengeActions = ({ id, status, issuerId, participantId }) => ({
     return status == "ACCEPTED"
   },
   handleAccept() {
+    console.log(id);
+    console.log("IssuerId");
+    console.log(issuerId);
     this.props.dispatch(acceptChallenge(id));
     this.props.dispatch(updatePoints(issuerId, 1));
   },

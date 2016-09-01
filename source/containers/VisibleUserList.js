@@ -4,7 +4,9 @@ import { toggleTodo } from '../actions'
 import UserList from '../components/UserList'
 
 const getChallengesUsers = (users, profile_id) => {
-    return users.filter(u => u.id != profile_id)
+    return _.filter(users, (u) => {
+                return u.id != profile_id
+            });
 }
 
 const mapStateToProps = (state, ownProps) => {

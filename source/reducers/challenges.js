@@ -1,24 +1,17 @@
 import _ from 'underscore'
 
-const challenge = (action) => {
-  switch (action.type) {
-    case 'ADD_CHALLENGE':
-        return {
-            id: action.payload.id,
-            issuer: action.payload.issuer_id,
-            participant: action.payload.participant_id,
-            description: action.payload.description,
-            status: action.payload.status
-        }
-  }
-}
-
 const challenges = (state = [], action) => {
   switch (action.type) {
     case 'ADD_CHALLENGE':
         return [
             ...state,
-            challenge(action)
+            {
+                id: action.payload.id,
+                issuer: action.payload.issuer_id,
+                participant: action.payload.participant_id,
+                description: action.payload.description,
+                status: action.payload.status
+            }
         ];
     case 'UPDATE_CHALLENGE_STATUS':
         let challenge = _.findWhere(state, {

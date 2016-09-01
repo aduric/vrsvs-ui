@@ -1,9 +1,12 @@
+import _ from 'underscore'
 import { connect } from 'react-redux'
 import { toggleTodo } from '../actions'
 import ChallengeList from '../components/ChallengeList'
 
 const getCurrentUserChallanges = (challenges, profile_id) => {
-    return challenges.filter(c => (c.issuer == profile_id || c.participant == profile_id))
+    return _.filter(challenges, (c) => {
+        return c.issuer == profile_id || c.participant == profile_id
+    });
 }
 
 const mapStateToProps = (state, ownProps) => {
