@@ -11,7 +11,7 @@ module.exports = {
     loaders: [
       {test: /\.js$/, exclude: /node_modules/, 
         loaders: [
-          "babel"
+          "babel-loader"
         ]
       },
       {test: /node_modules[\\\/]auth0-lock[\\\/].*\.js$/,
