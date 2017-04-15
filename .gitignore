@@ -24,3 +24,6 @@
 # Ignore config files and runners
 run.bat
 config.json
+
+# Ignore built bundle
+/public/js/bundle.js 
