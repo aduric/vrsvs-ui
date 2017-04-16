@@ -18,6 +18,8 @@ const App = (props) => ({
   },
 
   render() {
+    console.log(this)
+    console.log(props)
     return(
       <div>
       <AppBar
@@ -25,7 +27,7 @@ const App = (props) => ({
         iconElementLeft={<IconButton><NavigationClose /></IconButton>}
         iconElementRight={
           <div>
-            <Login auth={this.props.route.auth}/>
+            <Login auth={props.auth}/>
             <IconMenu
               iconButtonElement={
                 <IconButton><MoreVertIcon /></IconButton>
@@ -39,7 +41,6 @@ const App = (props) => ({
           </div>
         }
       /> 
-      {React.cloneElement(props.children, { auth: this.props.route.auth })}
       </div>
     );
   }
