@@ -14,11 +14,11 @@
 * Challenges page [C]
 * Add Challenge [C]
 * Add user points total [P]
-* Clean up IU
-* CI
+* Clean up UI + Add elements [P]
 
 === 0.1
 
-* Sync reduxstore localStorage with DB
+* CI
+* Sync reduxstore localStorage with DB (https://github.com/localForage/localForage?)
 
 === 0.2

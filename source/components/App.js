@@ -24,7 +24,6 @@ const App = (props) => ({
       <div>
       <AppBar
         title="vrsvs"
-        iconElementLeft={<IconButton><NavigationClose /></IconButton>}
         iconElementRight={
           <div>
             <Login auth={props.auth}/>
