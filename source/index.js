@@ -20,6 +20,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import AuthService from './util/AuthService'
 import {persistStore, autoRehydrate} from 'redux-persist'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import * as firebase from "firebase";
 
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941
@@ -39,7 +40,11 @@ persistStore(store, {}, () => {
   console.log('rehydration complete')
 })
 
+// add auth0
 const auth = new AuthService(config.auth0clientid, config.auth0apikey, config.auth0uri)
+
+// add firebase
+const fbase = firebase.initializeApp(config.firebase);
 
 // onEnter callback to validate authentication in private routes
 const PrivateRoute = ({ component: Component, ...rest }) => (
@@ -60,7 +65,7 @@ render(
     <Provider store={store}>
       <ConnectedRouter history={history}>
         <div>
-          <Route path="/" component={() => <App auth={auth}/>}/>
+          <Route path="/" component={() => <App auth={auth} fbase={fbase}/>}/>
           <Route path="/login" component={Login}/>  
           <PrivateRoute path="/users" component={() => <VisibleUserList auth={auth}/>}/>
           <PrivateRoute path="/challenges" component={() => <VisibleChallengeList auth={auth}/>}/>

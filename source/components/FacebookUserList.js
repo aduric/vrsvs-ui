@@ -25,31 +25,6 @@ class FacebookUserList extends React.Component {
     const { dispatch } = this.props
     dispatch(fetchUsersIfNeeded(this.fb.getProvider()))
   }
-  getProfile() {
-    this.fb.api('me', function (res) {
-    if(!res || res.error) {
-        console.log(!res ? 'error occurred' : res.error);
-        return;
-    }
-    console.log(res);
-    return {};
-    });
-  }
-  getFriends() {
-    this.fb.api('me/friends?fields=name,cover', function(res) {
-        if(!res || res.error) {
-            console.log(!res ? 'error occurred' : res.error);
-        }
-        console.log(res)
-        this.setState({friends: _.map(res.data, (f) => 
-            {
-                name: f.name
-                id: 'facebook|'.concat(f.id)
-                avatar: f.cover.source
-            }
-        )});
-    });
-  }
   render() {
     if(this.props.users.length == 0) {
       return(

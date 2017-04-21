@@ -11,40 +11,60 @@ import VisibleUserList from '../containers/VisibleUserList';
 import VisibleChallengeList from '../containers/VisibleChallengeList';
 import Login from './Login';
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
+import Badge from 'material-ui/Badge';
+import NotificationsIcon from 'material-ui/svg-icons/social/notifications';
+import VisibleNotificationList from '../containers/VisibleNotificationList';
 
 
 const App = (props) => ({
   getChildContext() {
       return { muiTheme: getMuiTheme(baseTheme) };
   },
-
   render() {
     console.log(this)
     console.log(props)
-    return(
-      <Toolbar>
-        <ToolbarGroup firstChild={true}>
-          <ToolbarTitle text="vrsvs"/>
-        </ToolbarGroup>
-        <ToolbarSeparator/>
-        <ToolbarGroup> 
-          <Login auth={props.auth}/>
-        </ToolbarGroup>
-        <ToolbarSeparator/>
-        <ToolbarGroup>
-          <IconMenu
-            iconButtonElement={
-              <IconButton touch={true}>
-                <NavigationExpandMoreIcon />
-              </IconButton>
-            }
-          >        
-            <MenuItem href="users" primaryText="Users" />
-            <MenuItem href="challenges" primaryText="Challenges" />
-          </IconMenu>
-        </ToolbarGroup>
-      </Toolbar>
-    );
+    if(props.auth.loggedIn()) {
+      return(
+        <Toolbar>
+          <ToolbarGroup firstChild={true}>
+            <ToolbarTitle text="vrsvs"/>
+          </ToolbarGroup>
+          <ToolbarSeparator/>
+          <ToolbarGroup> 
+            <Login auth={props.auth}/>
+          </ToolbarGroup>
+          <ToolbarSeparator/>
+          <ToolbarGroup>
+            <VisibleNotificationList {...props}/>
+          </ToolbarGroup>
+          <ToolbarSeparator/>
+          <ToolbarGroup>
+            <IconMenu
+              iconButtonElement={
+                <IconButton touch={true}>
+                  <NavigationExpandMoreIcon />
+                </IconButton>
+              }
+            >        
+              <MenuItem href="users" primaryText="Users" />
+              <MenuItem href="challenges" primaryText="Challenges" />
+            </IconMenu>
+          </ToolbarGroup>
+        </Toolbar>
+      );      
+    } else {
+      return(
+        <Toolbar>
+          <ToolbarGroup firstChild={true}>
+            <ToolbarTitle text="vrsvs"/>
+          </ToolbarGroup>
+          <ToolbarSeparator/>
+          <ToolbarGroup> 
+            <Login auth={props.auth}/>
+          </ToolbarGroup>
+        </Toolbar>
+      );
+    }
   }
 })
 

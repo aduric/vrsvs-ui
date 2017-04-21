@@ -3,6 +3,7 @@ import { addUser } from '../actions'
 import React, { PropTypes as T } from 'react'
 import AuthService from '../util/AuthService'
 import RaisedButton from 'material-ui/RaisedButton';
+import Avatar from 'material-ui/Avatar';
 
 export class Login extends React.Component {
   static contextTypes = {
@@ -33,7 +34,10 @@ export class Login extends React.Component {
     console.log(this.state.profile);
     if(this.state.isLoggedIn) {
       return (
-        <p>Hello {this.state.profile.given_name}, <RaisedButton label="Logout" onClick={auth.logout.bind(this)} /></p>
+        <p>
+          <Avatar src={this.state.profile.picture} />
+          <RaisedButton label="Logout" onClick={auth.logout.bind(this)} />
+        </p>
       )
     }
     else{

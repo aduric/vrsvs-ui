@@ -122,3 +122,33 @@ export function fetchUsersIfNeeded(fbProvider) {
         return dispatch(fetchUsers(fbProvider))
     }    
 }
+function fetchNotifications(fbase) {
+    console.log('data from firebase top')
+    console.log(fbase)
+    return dispatch => {
+        return fbase.database().ref('notifications').once('value', function(snapshot) {
+            var notifications = snapshot.val();
+            console.log('data from firebase')
+            console.log(notifications)
+            dispatch(receiveNotifications(notifications));
+        }, function(error) {
+            // The callback failed.
+            console.error(error);
+        });
+    }
+}
+function receiveNotifications(notifications) {
+    console.log('receive notifications')
+    console.log(notifications)
+    return {
+        type: 'RECEIVE_USER_NOTIFICATIONS',
+        payload: {
+            notifications: notifications
+        }
+    }
+}
+export function fetchNotificationsIfNeeded(fbase) {
+    return (dispatch, getState) => {
+        return dispatch(fetchNotifications(fbase))
+    }    
+}
