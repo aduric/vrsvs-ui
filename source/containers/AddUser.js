@@ -15,20 +15,14 @@ let AddUser = ({ dispatch }) => {
         if (!input.text.value.trim() || !input.name.value.trim()) {
           return
         }
-        dispatch(addUser(input.name.value, input.text.value))
+        dispatch(addUser(input.name.value))
         input.name.value = ''
-        input.text.value = ''
       }}>
         <TextField
           hintText="User Name"
           ref={node => {
             input.name = node.input
         }} /><br/>
-        <TextField
-          hintText="Text"
-          ref={node => {
-            input.text = node.input
-        }} />
         <FloatingActionButton type="submit">
           <ContentAdd />
         </FloatingActionButton>

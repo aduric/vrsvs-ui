@@ -2,6 +2,7 @@ import React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux'
+import thunk from 'redux-thunk';
 import createHistory from 'history/createBrowserHistory'
 import vrsvsApp from './reducers'
 import App from './components/App'
@@ -10,7 +11,7 @@ import Login from './components/Login'
 import VisibleUserList from './containers/VisibleUserList'
 import Lock from './containers/Lock'
 import VisibleChallengeList from './containers/VisibleChallengeList'
-import initialUsers from '../data/users.json'
+import points from '../data/points.json'
 import initialChallenges from '../data/challenges.json'
 import config from '../config.json'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
@@ -25,20 +26,20 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 injectTapEventPlugin();
 
 const history = createHistory()
-const middleware = routerMiddleware(history)
 
 const store = createStore(
   vrsvsApp, 
-  { "users": initialUsers, "challenges": initialChallenges }, 
+  { "users": [], "challenges": initialChallenges }, 
   compose(
-    applyMiddleware(middleware), 
+    applyMiddleware(routerMiddleware(history)), 
+    applyMiddleware(thunk),
     autoRehydrate()))
 
 persistStore(store, {}, () => {
   console.log('rehydration complete')
 })
 
-const auth = new AuthService(config.auth0key, config.auth0uri)
+const auth = new AuthService(config.auth0clientid, config.auth0apikey, config.auth0uri)
 
 // onEnter callback to validate authentication in private routes
 const PrivateRoute = ({ component: Component, ...rest }) => (

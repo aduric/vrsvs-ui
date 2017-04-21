@@ -28,6 +28,12 @@ module.exports = {
       }
     ]
   },
+  node: {
+    console: true,
+    fs: 'empty',
+    net: 'empty',
+    tls: 'empty'
+  },
   devServer: {
     historyApiFallback: true,
     contentBase: __dirname + '/public'

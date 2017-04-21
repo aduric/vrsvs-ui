@@ -17,6 +17,16 @@ import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import uuid from 'node-uuid';
 import UserChallenge from './UserChallenge'
+import {
+  blue300,
+  indigo900,
+  orange200,
+  deepOrange300,
+  pink400,
+  purple500,
+} from 'material-ui/styles/colors';
+
+const style = {margin: 5};
 
 class User extends React.Component {
   constructor(props) {
@@ -45,16 +55,19 @@ class User extends React.Component {
           participantName={this.props.name}
           issuerId={this.props.meid}/>
         <ListItem
-          leftAvatar={<Avatar src="images/ok-128.jpg" />}
+          leftAvatar={<Avatar src={this.props.avatar} />}
+          rightAvatar={
+            <Avatar
+              color={deepOrange300}
+              backgroundColor={purple500}
+              size={30}
+              style={style}
+            >
+              {this.props.points}
+            </Avatar>
+          }
           primaryText={this.props.name}
           onTouchTap={() => this.handleOpen()}
-          secondaryText={
-            <p>
-              <span style={{color: darkBlack}}>{this.props.points} points</span> --
-              {this.props.text}
-            </p>
-          }
-          secondaryTextLines={2}
         />
       </div>
     );
@@ -65,7 +78,6 @@ User.propTypes = {
   id: PropTypes.string.isRequired, 
   name: PropTypes.string.isRequired,
   points: PropTypes.number.isRequired,
-  text: PropTypes.string.isRequired,
   meid: PropTypes.string.isRequired,
 }
 

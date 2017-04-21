@@ -1,10 +1,9 @@
+
 export const addUser = (id, name) => {
     return {
         type: 'ADD_USER',
         payload: {
             id,
-            name,
-            text: "",
             points: 0            
         }
     }
@@ -16,7 +15,7 @@ export const updateUser = (id, user) => {
         payload: {
             id: id,
             user: user.name,
-            text: user.text,
+            avatar: user.avatar,
             points: user.points
         }
     }
@@ -83,4 +82,43 @@ export const failChallenge = (challenge_id) => {
             status: "FAILED"
         }
     }
+}
+
+function shouldFetchUsers(state, fbProvider) {}
+function fetchUsers(fbProvider) {
+    return dispatch => {
+        dispatch(requestUsers())
+        return fbProvider.api('me/friends?fields=id,name,picture', function(res) {
+            var users = []
+            if(!res || res.error) {
+                console.log(!res ? 'error occurred' : res.error);
+            } else {
+                console.log('got friends')
+                console.log(res)
+                users = res.data
+            }
+            dispatch(receiveUsers(users));
+        });
+    }
+}
+function receiveUsers(users) {
+    console.log('receive users')
+    console.log(users)
+    return {
+        type: 'RECEIVE_USERS',
+        payload: {
+            users: users
+        }
+    }
+}
+function requestUsers() {
+        console.log('REQUEST_USERS')
+    return {
+        type: 'REQUEST_USERS'
+    }
+}
+export function fetchUsersIfNeeded(fbProvider) {
+    return (dispatch, getState) => {
+        return dispatch(fetchUsers(fbProvider))
+    }    
 }

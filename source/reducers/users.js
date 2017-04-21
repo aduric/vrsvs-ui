@@ -12,7 +12,7 @@ const users = (state = [], action) => {
                 {
                     id: action.payload.id,
                     name: action.payload.name,
-                    text: action.payload.text,
+                    avatar: action.payload.avatar,
                     points: action.payload.points
                 }
             ]
@@ -28,10 +28,28 @@ const users = (state = [], action) => {
             {
                 id: action.payload.id,
                 name: action.payload.name,
-                text: action.payload.text,
+                avatar: action.payload.avatar,
                 points: action.payload.points
             }
         ]
+    case 'RECEIVE_USERS':
+        console.log('receive users reducer')
+        console.log(action.payload.users)
+        var mappedusers = _.map(action.payload.users, function(u) { 
+                return {
+                    name: u.name,
+                    id: 'facebook|'.concat(u.id),
+                    avatar: u.picture.data.url,
+                    points: 0
+                }});
+        console.log(mappedusers)
+        var s = _.uniq([...state, ...mappedusers], function(item, key, id) {
+                return item.id;
+            }
+        )
+        console.log('new state')
+        console.log(s)
+        return s;
     case 'UPDATE_POINTS':
     console.log("Update points");
     console.log(state);
