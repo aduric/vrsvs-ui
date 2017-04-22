@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { acceptChallenge, rejectChallenge, completeChallenge, failChallenge, updatePoints } from '../actions'
 import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
+import Avatar from 'material-ui/Avatar';
 
 const style = {
   margin: 12,
@@ -66,20 +67,17 @@ ChallengeActions.PropTypes = {
 
 ChallengeActions = connect()(ChallengeActions);
 
-const Challenge = ({ id, issuer, participant, description, status }) => ({
+const Challenge = (challenge) => ({
   render() {
     return(
       <Card>
         <CardHeader
-          title={description}
-          subtitle={status}
+          title={<div><Avatar src={challenge.issuer_details.avatar} /> {challenge.description}</div>}
+          subtitle={challenge.status}
           actAsExpander={true}
           showExpandableButton={true}
         />
-        <CardText expandable={true}>
-          <p>{id}, {issuer}, {participant}, {description}, {status}</p>
-        </CardText>
-        <ChallengeActions id={id} status={status} issuerId={issuer} participantId={participant} />
+        <ChallengeActions id={challenge.id} status={challenge.status} issuerId={challenge.issuer} participantId={challenge.participant} />
       </Card>
     )
   }

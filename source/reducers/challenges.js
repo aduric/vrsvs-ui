@@ -2,6 +2,8 @@ import _ from 'underscore'
 
 const challenges = (state = [], action) => {
   switch (action.type) {
+    case 'RECEIVE_CHALLENGES':
+        return action.payload.challenges;
     case 'ADD_CHALLENGE':
         return [
             ...state,

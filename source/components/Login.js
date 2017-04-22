@@ -24,7 +24,7 @@ export class Login extends React.Component {
     props.auth.on('profile_updated', (newProfile) => {
       console.log(this.props);
       this.setState({profile: newProfile})
-      this.props.dispatch(addUser(newProfile.user_id, newProfile.name));
+      this.props.dispatch(addUser(newProfile.user_id, newProfile.name, newProfile.picture));
     })
   }
 

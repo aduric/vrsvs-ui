@@ -1,10 +1,12 @@
 
-export const addUser = (id, name) => {
+export const addUser = (id, name, avatar) => {
     return {
         type: 'ADD_USER',
         payload: {
             id,
-            points: 0            
+            name,
+            avatar,
+            points: 0     
         }
     }
 }
@@ -148,6 +150,32 @@ function receiveNotifications(notifications) {
     }
 }
 
+function fetchChallenges(fbase, userId) {
+    console.log('data from firebase top')
+    console.log(fbase)
+    return dispatch => {
+        return fbase.database().ref('challenges').once('value', function(snapshot) {
+            var challenges = snapshot.val();
+            console.log('data from firebase')
+            console.log(challenges)
+            dispatch(receiveChallenges(challenges));
+        }, function(error) {
+            // The callback failed.
+            console.error(error);
+        });
+    }
+}
+function receiveChallenges(challenges) {
+    console.log('receive notifications')
+    console.log(challenges)
+    return {
+        type: 'RECEIVE_CHALLENGES',
+        payload: {
+            challenges: challenges
+        }
+    }
+}
+
 function updateSeenNotifications(fbase, userId) {
     return dispatch => {
         return fbase.database().ref('users/' + userId + '/notifications').once('value', function(snapshot) {
@@ -167,6 +195,12 @@ function updateSeenNotifications(fbase, userId) {
 export function fetchNotificationsIfNeeded(fbase, userId) {
     return (dispatch, getState) => {
         return dispatch(fetchNotifications(fbase, userId))
+    }    
+}
+
+export function fetchChallengesIfNeeded(fbase, userId) {
+    return (dispatch, getState) => {
+        return dispatch(fetchChallenges(fbase, userId))
     }    
 }
 

@@ -30,7 +30,7 @@ const history = createHistory()
 
 const store = createStore(
   vrsvsApp, 
-  { "users": [], "challenges": initialChallenges }, 
+  { "users": [], "challenges": [] }, 
   compose(
     applyMiddleware(routerMiddleware(history)), 
     applyMiddleware(thunk),
@@ -68,7 +68,7 @@ render(
           <Route path="/" component={() => <App auth={auth} fbase={fbase}/>}/>
           <Route path="/login" component={Login}/>  
           <PrivateRoute path="/users" component={() => <VisibleUserList auth={auth}/>}/>
-          <PrivateRoute path="/challenges" component={() => <VisibleChallengeList auth={auth}/>}/>
+          <PrivateRoute path="/challenges" component={() => <VisibleChallengeList auth={auth} fbase={fbase}/>}/>
         </div>
       </ConnectedRouter>
     </Provider>
