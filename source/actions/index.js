@@ -122,11 +122,11 @@ export function fetchUsersIfNeeded(fbProvider) {
         return dispatch(fetchUsers(fbProvider))
     }    
 }
-function fetchNotifications(fbase) {
+function fetchNotifications(fbase, userId) {
     console.log('data from firebase top')
     console.log(fbase)
     return dispatch => {
-        return fbase.database().ref('notifications').once('value', function(snapshot) {
+        return fbase.database().ref('users/' + userId + '/notifications').once('value', function(snapshot) {
             var notifications = snapshot.val();
             console.log('data from firebase')
             console.log(notifications)
@@ -147,8 +147,31 @@ function receiveNotifications(notifications) {
         }
     }
 }
-export function fetchNotificationsIfNeeded(fbase) {
+
+function updateSeenNotifications(fbase, userId) {
+    return dispatch => {
+        return fbase.database().ref('users/' + userId + '/notifications').once('value', function(snapshot) {
+            var updates = {};
+            snapshot.forEach(function(child) {
+                updates[child.key + '/status'] = "seen";
+            });
+            fbase.database().ref('users/' + userId + '/notifications').update(updates);
+            dispatch(receiveNotifications([]));
+        }, function(error) {
+            // The callback failed.
+            console.error(error);
+        });
+    }
+}
+
+export function fetchNotificationsIfNeeded(fbase, userId) {
     return (dispatch, getState) => {
-        return dispatch(fetchNotifications(fbase))
+        return dispatch(fetchNotifications(fbase, userId))
+    }    
+}
+
+export function handleSeen(fbase, userId) {
+    return (dispatch, getState) => {
+        return dispatch(updateSeenNotifications(fbase, userId))
     }    
 }

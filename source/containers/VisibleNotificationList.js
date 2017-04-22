@@ -4,7 +4,7 @@ import NotificationList from '../components/NotificationList'
 
 const getCurrentNotifications = (notifications, profile_id) => {
     return _.filter(notifications, (n) => {
-        return n.recepient == profile_id && n.status != "seen"
+        return n.status != "seen"
     });
 }
 
