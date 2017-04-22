@@ -1,0 +1,86 @@
+{
+    "users": {
+        "facebook|102818030280913": {
+            "notifications": [
+                {
+                    "status":"unseen",
+                    "message":"Your friend joined!"                    
+                }
+            ],
+            "points": 5
+        },
+        "facebook|104328326795339": {
+            "notifications": [
+                {
+                    "status":"unseen",
+                    "message":"Your friend joined!"            
+                }
+            ],
+            "points": 8
+        },
+        "facebook|104957340065140": {
+            "notifications": [
+                {
+                    "status":"unseen",
+                    "message":"Your friend joined!"            
+                }
+            ],
+            "points": 7
+        },
+        "facebook|109613809597364": {
+            "notifications": [
+                {
+                    "status":"unseen",
+                    "message":"Your friend joined!"            
+                }
+            ],
+            "points": 3
+        },
+        "facebook|294482404319232": {
+            "notifications": [
+                {
+                    "status":"unseen",
+                    "message":"Your friend joined!"            
+                }
+            ],
+            "points": 0
+        }
+    },
+    "challenges": [
+        {
+            "id": "1",
+            "issuer": "facebook|102818030280913",
+            "participant": "facebook|104328326795339",
+            "description": "Go to gym for 1 hour",
+            "status": "ISSUED"
+        },
+        {
+            "id": "2",
+            "issuer": "facebook|104328326795339",
+            "participant": "facebook|104957340065140",
+            "description": "Watch TV for 1 hour",
+            "status": "COMPLETED"
+        },
+        {
+            "id": "3",
+            "issuer": "facebook|104957340065140",
+            "participant": "facebook|109613809597364",
+            "description": "Go to gym for 1 hour",
+            "status": "REJECTED"
+        },
+        {
+            "id": "4",
+            "issuer": "facebook|104957340065140",
+            "participant": "facebook|294482404319232",
+            "description": "Go to gym for 1 hour",
+            "status": "ACCEPTED"
+        },
+        {
+            "id": "5",
+            "issuer": "facebook|104957340065140",
+            "participant": "facebook|294482404319232",
+            "description": "Go to gym for 1 hour",
+            "status": "FAILED"
+        }
+    ]        
+}
