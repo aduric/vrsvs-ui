@@ -39,6 +39,7 @@ class FacebookUserList extends React.Component {
                 {this.props.users.map(user =>
                     <User 
                     meid={this.props.profileId}
+                    fbase={this.props.fbase}
                     {...user}
                     />
                 )}

@@ -5,8 +5,7 @@ export const addUser = (id, name, avatar) => {
         payload: {
             id,
             name,
-            avatar,
-            points: 0     
+            avatar
         }
     }
 }
@@ -18,7 +17,6 @@ export const updateUser = (id, user) => {
             id: id,
             user: user.name,
             avatar: user.avatar,
-            points: user.points
         }
     }
 }
@@ -123,6 +121,19 @@ export function fetchUsersIfNeeded(fbProvider) {
     return (dispatch, getState) => {
         return dispatch(fetchUsers(fbProvider))
     }    
+}
+export function fetchPoints(fbase, userId) {
+    return (dispatch, getState) => {
+        return fbase.database().ref('users/' + userId + '/points').once('value', function(snapshot) {
+            var points = snapshot.val();
+            console.log('data from firebase - points')
+            console.log(points)
+            dispatch(updatePoints(userId, points));
+        }, function(error) {
+            // The callback failed.
+            console.error(error);
+        });
+    }
 }
 function fetchNotifications(fbase, userId) {
     console.log('data from firebase top')

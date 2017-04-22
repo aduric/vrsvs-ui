@@ -4,6 +4,9 @@ import React, { PropTypes as T } from 'react'
 import AuthService from '../util/AuthService'
 import RaisedButton from 'material-ui/RaisedButton';
 import Avatar from 'material-ui/Avatar';
+import IconButton from 'material-ui/IconButton';
+import IconMenu from 'material-ui/IconMenu';
+import MenuItem from 'material-ui/MenuItem';
 
 export class Login extends React.Component {
   static contextTypes = {
@@ -29,20 +32,23 @@ export class Login extends React.Component {
   }
 
   render() {
-    const { auth } = this.props;
-    const { profile } = this.state.profile;
-    console.log(this.state.profile);
-    if(this.state.isLoggedIn) {
+    console.log('redering login');
+    console.log(this.props);
+    if(this.props.auth.loggedIn()) {
       return (
-        <p>
-          <Avatar src={this.state.profile.picture} />
-          <RaisedButton label="Logout" onClick={auth.logout.bind(this)} />
-        </p>
+          <IconMenu
+            iconButtonElement={
+              <IconButton touch={true}>
+                <Avatar src={this.props.auth.getProfile().picture} />
+              </IconButton>
+            }>        
+            <MenuItem href="#" primaryText="Logout" onClick={this.props.auth.logout.bind(this)} />
+          </IconMenu>
       )
     }
     else{
       return (
-        <RaisedButton label="Login" onClick={auth.login.bind(this)} />
+        <RaisedButton label="Login" onClick={this.props.auth.login.bind(this)} />
       )
     }
   }

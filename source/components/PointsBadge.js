@@ -3,6 +3,7 @@
 import autobind from 'autobind-decorator'
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
+import _ from 'underscore'
 import {List, ListItem} from 'material-ui/List';
 import Avatar from 'material-ui/Avatar';
 import {grey400, darkBlack, lightBlack} from 'material-ui/styles/colors';
@@ -17,7 +18,7 @@ import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import uuid from 'node-uuid';
 import UserChallenge from './UserChallenge'
-import PointsBadge from './PointsBadge';
+import { fetchPoints } from '../actions'
 import {
   blue300,
   indigo900,
@@ -29,50 +30,42 @@ import {
 
 const style = {margin: 5};
 
-class User extends React.Component {
+class PointsBadge extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: false
+      points: 0
     };
   }
-  handleOpen() {
-    this.setState(
-      {
-        open: true,
-      });
-  }
-  handleClose() {  
-    this.setState({open: false});  
+  componentDidMount() {
+    const { dispatch } = this.props
+    dispatch(fetchPoints(this.props.fbase, this.props.userId))
   }
   render() {
     return(
-      <div>
-        <UserChallenge 
-          open={this.state.open}
-          handleOpen={() => this.handleOpen()}
-          handleClose={() => this.handleClose()}
-          participantId={this.props.id}
-          participantName={this.props.name}
-          issuerId={this.props.meid}/>
-        <ListItem
-          leftAvatar={<Avatar src={this.props.avatar} />}
-          rightAvatar={
-            <PointsBadge userId={this.props.id} fbase={this.props.fbase}/>
-          }
-          primaryText={this.props.name}
-          onTouchTap={() => this.handleOpen()}
-        />
-      </div>
+        <Avatar
+            color={deepOrange300}
+            backgroundColor={purple500}
+            size={30}
+            style={style}
+        >
+            {this.props.points}
+        </Avatar>
     );
   }
 }
 
-User.propTypes = {
-  id: PropTypes.string.isRequired, 
-  name: PropTypes.string.isRequired,
-  points: PropTypes.number.isRequired,
-  meid: PropTypes.string.isRequired,
+const getPoints = (users, user_id) => {
+    var user = _.findWhere(users, {id: user_id});
+    return user ? user.points: 0
 }
 
-export default User
+const mapStateToProps = (state, ownProps) => {
+    return {
+        points: getPoints(state.users, ownProps.userId)
+    }
+}
+
+export default connect(
+  mapStateToProps
+)(PointsBadge)

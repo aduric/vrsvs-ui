@@ -14,6 +14,7 @@ import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui
 import Badge from 'material-ui/Badge';
 import NotificationsIcon from 'material-ui/svg-icons/social/notifications';
 import VisibleNotificationList from '../containers/VisibleNotificationList';
+import PointsBadge from './PointsBadge';
 
 
 const App = (props) => ({
@@ -21,6 +22,7 @@ const App = (props) => ({
       return { muiTheme: getMuiTheme(baseTheme) };
   },
   render() {
+    console.log('rendering app')
     console.log(this)
     console.log(props)
     if(props.auth.loggedIn()) {
@@ -31,11 +33,15 @@ const App = (props) => ({
           </ToolbarGroup>
           <ToolbarSeparator/>
           <ToolbarGroup> 
-            <Login auth={props.auth}/>
+            <Login {...props}/>
           </ToolbarGroup>
           <ToolbarSeparator/>
           <ToolbarGroup>
             <VisibleNotificationList {...props}/>
+          </ToolbarGroup>
+          <ToolbarSeparator/>
+          <ToolbarGroup>
+            <PointsBadge userId={props.auth.getProfile().user_id} fbase={props.fbase}/>
           </ToolbarGroup>
           <ToolbarSeparator/>
           <ToolbarGroup>

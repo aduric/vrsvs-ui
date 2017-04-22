@@ -67,7 +67,7 @@ render(
         <div>
           <Route path="/" component={() => <App auth={auth} fbase={fbase}/>}/>
           <Route path="/login" component={Login}/>  
-          <PrivateRoute path="/users" component={() => <VisibleUserList auth={auth}/>}/>
+          <PrivateRoute path="/users" component={() => <VisibleUserList auth={auth} fbase={fbase}/>}/>
           <PrivateRoute path="/challenges" component={() => <VisibleChallengeList auth={auth} fbase={fbase}/>}/>
         </div>
       </ConnectedRouter>
