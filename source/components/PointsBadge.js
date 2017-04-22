@@ -28,8 +28,6 @@ import {
   purple500,
 } from 'material-ui/styles/colors';
 
-const style = {margin: 5};
-
 class PointsBadge extends React.Component {
   constructor(props) {
     super(props);
@@ -47,7 +45,7 @@ class PointsBadge extends React.Component {
             color={deepOrange300}
             backgroundColor={purple500}
             size={30}
-            style={style}
+            style={this.props.positionstyle}
         >
             {this.props.points}
         </Avatar>

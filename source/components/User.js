@@ -58,7 +58,10 @@ class User extends React.Component {
         <ListItem
           leftAvatar={<Avatar src={this.props.avatar} />}
           rightAvatar={
-            <PointsBadge userId={this.props.id} fbase={this.props.fbase}/>
+            <PointsBadge
+              userId={this.props.id}
+              fbase={this.props.fbase}
+              positionstyle={{position: 'absolute', top: '8px', right: '16px', margin: 5}}/>
           }
           primaryText={this.props.name}
           onTouchTap={() => this.handleOpen()}

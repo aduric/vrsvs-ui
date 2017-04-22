@@ -41,7 +41,10 @@ const App = (props) => ({
           </ToolbarGroup>
           <ToolbarSeparator/>
           <ToolbarGroup>
-            <PointsBadge userId={props.auth.getProfile().user_id} fbase={props.fbase}/>
+            <PointsBadge 
+              userId={props.auth.getProfile().user_id}
+              fbase={props.fbase}
+              positionstyle={{margin: 5}}/>
           </ToolbarGroup>
           <ToolbarSeparator/>
           <ToolbarGroup>
