@@ -75,7 +75,7 @@ const Challenge = (challenge) => ({
           title={<div><Avatar src={challenge.issuer_details.avatar} /> {challenge.description}</div>}
           subtitle={challenge.status}
           actAsExpander={true}
-          showExpandableButton={true}
+          showExpandableButton={false}
         />
         <ChallengeActions id={challenge.id} status={challenge.status} issuerId={challenge.issuer} participantId={challenge.participant} />
       </Card>

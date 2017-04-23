@@ -4,7 +4,7 @@ import Divider from 'material-ui/Divider';
 import Subheader from 'material-ui/Subheader';
 import AddUser from '../containers/AddUser'
 import FacebookUserList from './FacebookUserList'
-
+import {GridList, GridTile} from 'material-ui/GridList';
 
 class UserList extends React.Component {
   constructor(props) {

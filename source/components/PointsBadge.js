@@ -26,7 +26,13 @@ import {
   deepOrange300,
   pink400,
   purple500,
+  cyan500
 } from 'material-ui/styles/colors';
+
+const style = {
+  "min-width": "0px",
+  "margin": "0px"
+};
 
 class PointsBadge extends React.Component {
   constructor(props) {
@@ -40,15 +46,14 @@ class PointsBadge extends React.Component {
     dispatch(fetchPoints(this.props.fbase, this.props.userId))
   }
   render() {
+      console.log('rendering points')
+      console.log(this.props.points)
     return(
-        <Avatar
-            color={deepOrange300}
-            backgroundColor={purple500}
-            size={30}
+        <RaisedButton
+            label={this.props.points}
+            secondary={true}
             style={this.props.positionstyle}
-        >
-            {this.props.points}
-        </Avatar>
+            disableTouchRipple={true}/>
     );
   }
 }

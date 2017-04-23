@@ -2,6 +2,8 @@ import React, { PropTypes } from 'react'
 import {List, ListItem} from 'material-ui/List';
 import Challenge from './Challenge'
 import { fetchChallengesIfNeeded } from '../actions'
+import Subheader from 'material-ui/Subheader';
+import Divider from 'material-ui/Divider';
 
 class ChallengeList extends React.Component {
   constructor(props) {
@@ -17,15 +19,28 @@ class ChallengeList extends React.Component {
   render() {
     console.log('rendering challenges');
     console.log(this.props)
-    return(
-      <List>
-        {this.props.challenges.map(challenge =>
-          <Challenge
-            {...challenge}
-          />
-        )}
-      </List>
-    )
+    if(this.props.challenges.length == 0) {
+      return(
+        <div>
+          <Subheader>Active challenges</Subheader>
+          <p style={{"padding-left": "16px"}}>You have no active challenges. Challenge your friends!</p>
+          <Divider inset={true} />
+        </div>
+      )
+    } else {
+      return(
+        <div>
+          <Subheader>Active challenges</Subheader>
+          <List>
+            {this.props.challenges.map(challenge =>
+              <Challenge
+                {...challenge}
+              />
+            )}
+          </List>
+        </div>
+      )
+    }
   }
 }
 ChallengeList.propTypes = {

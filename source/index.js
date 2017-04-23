@@ -14,13 +14,14 @@ import VisibleChallengeList from './containers/VisibleChallengeList'
 import points from '../data/points.json'
 import initialChallenges from '../data/challenges.json'
 import config from '../config.json'
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Link, Redirect } from 'react-router-dom'
 import { ConnectedRouter, routerReducer, routerMiddleware, push } from 'react-router-redux'
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import AuthService from './util/AuthService'
 import {persistStore, autoRehydrate} from 'redux-persist'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import * as firebase from "firebase";
+import BottomNav from './components/BottomNav'
 
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941
@@ -69,6 +70,7 @@ render(
           <Route path="/login" component={Login}/>  
           <PrivateRoute path="/users" component={() => <VisibleUserList auth={auth} fbase={fbase}/>}/>
           <PrivateRoute path="/challenges" component={() => <VisibleChallengeList auth={auth} fbase={fbase}/>}/>
+          <Route path="/" component={() => <BottomNav/>}/>
         </div>
       </ConnectedRouter>
     </Provider>

@@ -29,7 +29,7 @@ class FacebookUserList extends React.Component {
     if(this.props.users.length == 0) {
       return(
         <div>
-          <p>There are no active friends. Invite some!</p>
+          <p style={{"padding-left": "16px"}}>There are no active friends. Invite some!</p>
           <Divider inset={true} />
         </div>
       )

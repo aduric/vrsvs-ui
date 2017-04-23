@@ -61,7 +61,7 @@ class User extends React.Component {
             <PointsBadge
               userId={this.props.id}
               fbase={this.props.fbase}
-              positionstyle={{position: 'absolute', top: '8px', right: '16px', margin: 5}}/>
+              positionstyle={{position: 'absolute', top: '8px', right: '16px', margin: 5, "min-width": "0px"}}/>
           }
           primaryText={this.props.name}
           onTouchTap={() => this.handleOpen()}

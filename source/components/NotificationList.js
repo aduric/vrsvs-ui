@@ -41,7 +41,8 @@ class NotificationList extends React.Component {
                 <Badge
                     badgeContent={this.props.notifications.length}
                     secondary={true}
-                    badgeStyle={{top: 12, right: 12}}>
+                    badgeStyle={{top: 8, right: 8}}
+                    style={{padding: "12px 12px 12px 12px"}}>
                     <IconButton 
                         tooltip="Notifications">
                         <NotificationsIcon />

@@ -15,6 +15,7 @@ import Badge from 'material-ui/Badge';
 import NotificationsIcon from 'material-ui/svg-icons/social/notifications';
 import VisibleNotificationList from '../containers/VisibleNotificationList';
 import PointsBadge from './PointsBadge';
+import RaisedButton from 'material-ui/RaisedButton';
 
 
 const App = (props) => ({
@@ -27,26 +28,13 @@ const App = (props) => ({
     console.log(props)
     if(props.auth.loggedIn()) {
       return(
-        <Toolbar>
-          <ToolbarGroup firstChild={true}>
-            <ToolbarTitle text="vrsvs"/>
-          </ToolbarGroup>
-          <ToolbarSeparator/>
+        <AppBar title="vrsvs">
           <ToolbarGroup> 
             <Login {...props}/>
           </ToolbarGroup>
-          <ToolbarSeparator/>
           <ToolbarGroup>
             <VisibleNotificationList {...props}/>
           </ToolbarGroup>
-          <ToolbarSeparator/>
-          <ToolbarGroup>
-            <PointsBadge 
-              userId={props.auth.getProfile().user_id}
-              fbase={props.fbase}
-              positionstyle={{margin: 5}}/>
-          </ToolbarGroup>
-          <ToolbarSeparator/>
           <ToolbarGroup>
             <IconMenu
               iconButtonElement={
@@ -59,19 +47,15 @@ const App = (props) => ({
               <MenuItem href="challenges" primaryText="Challenges" />
             </IconMenu>
           </ToolbarGroup>
-        </Toolbar>
+        </AppBar>
       );      
     } else {
       return(
-        <Toolbar>
-          <ToolbarGroup firstChild={true}>
-            <ToolbarTitle text="vrsvs"/>
-          </ToolbarGroup>
-          <ToolbarSeparator/>
+        <AppBar title="vrsvs">
           <ToolbarGroup> 
             <Login auth={props.auth}/>
           </ToolbarGroup>
-        </Toolbar>
+        </AppBar>
       );
     }
   }

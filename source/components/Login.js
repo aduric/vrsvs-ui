@@ -38,7 +38,9 @@ export class Login extends React.Component {
       return (
           <IconMenu
             iconButtonElement={
-              <IconButton touch={true}>
+              <IconButton
+                touch={true}
+                style={{padding: "0px"}}>
                 <Avatar src={this.props.auth.getProfile().picture} />
               </IconButton>
             }>        
@@ -46,7 +48,7 @@ export class Login extends React.Component {
           </IconMenu>
       )
     }
-    else{
+    else {
       return (
         <RaisedButton label="Login" onClick={this.props.auth.login.bind(this)} />
       )
