@@ -20,8 +20,11 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import AuthService from './util/AuthService'
 import {persistStore, autoRehydrate} from 'redux-persist'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import lightBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 import * as firebase from "firebase";
-import BottomNav from './components/BottomNav'
+import BottomNav from './components/BottomNav';
+import VerticalNonLinear from './components/VerticalNonLinear';
 
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941
@@ -67,6 +70,7 @@ render(
       <ConnectedRouter history={history}>
         <div>
           <Route path="/" component={() => <App auth={auth} fbase={fbase}/>}/>
+          <Route exact path="/" component={() => <VerticalNonLinear/>}/>
           <Route path="/login" component={Login}/>  
           <PrivateRoute path="/users" component={() => <VisibleUserList auth={auth} fbase={fbase}/>}/>
           <PrivateRoute path="/challenges" component={() => <VisibleChallengeList auth={auth} fbase={fbase}/>}/>
