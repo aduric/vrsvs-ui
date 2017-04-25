@@ -1,6 +1,8 @@
 {
     "users": {
         "facebook|102818030280913": {
+            "name": "Maria Wisemanescu",
+            "avatar": "https://scontent.xx.fbcdn.net/v/t1.0-1/c15.0.50.50/p50x50/1379841_10150004552801901_469209496895221757_n.jpg?oh=d9f13139f45ec1c9d1e05a32d1c897eb&oe=597AC533",
             "notifications": [
                 {
                     "status":"unseen",
@@ -10,6 +12,8 @@
             "points": 5
         },
         "facebook|104328326795339": {
+            "name": "Patricia Alisonson",
+            "avatar": "https://scontent.xx.fbcdn.net/v/t1.0-1/c15.0.50.50/p50x50/1379841_10150004552801901_469209496895221757_n.jpg?oh=d9f13139f45ec1c9d1e05a32d1c897eb&oe=597AC533",
             "notifications": [
                 {
                     "status":"unseen",
@@ -19,6 +23,8 @@
             "points": 8
         },
         "facebook|104957340065140": {
+            "name": "Betty Liangstein",
+            "avatar": "https://scontent.xx.fbcdn.net/v/t1.0-1/c15.0.50.50/p50x50/1379841_10150004552801901_469209496895221757_n.jpg?oh=d9f13139f45ec1c9d1e05a32d1c897eb&oe=597AC533",
             "notifications": [
                 {
                     "status":"unseen",
@@ -27,7 +33,9 @@
             ],
             "points": 7
         },
-        "facebook|109613809597364": {
+        "facebook|10154465429806996": {
+            "name": "Adnan Duric",
+            "avatar": "https://scontent.xx.fbcdn.net/v/t1.0-1/c68.36.455.455/s50x50/206169_419825386995_705786_n.jpg?oh=55f0b7dc5d7524fa777d8df428c1abc8&oe=598A36EE",
             "notifications": [
                 {
                     "status":"unseen",
@@ -35,15 +43,6 @@
                 }
             ],
             "points": 3
-        },
-        "facebook|294482404319232": {
-            "notifications": [
-                {
-                    "status":"unseen",
-                    "message":"Your friend joined!"            
-                }
-            ],
-            "points": 0
         }
     },
     "challenges": [
@@ -71,14 +70,14 @@
         {
             "id": "4",
             "issuer": "facebook|104957340065140",
-            "participant": "facebook|294482404319232",
+            "participant": "facebook|104328326795339",
             "description": "Go to gym for 1 hour",
             "status": "ACCEPTED"
         },
         {
             "id": "5",
             "issuer": "facebook|104957340065140",
-            "participant": "facebook|294482404319232",
+            "participant": "facebook|104328326795339",
             "description": "Go to gym for 1 hour",
             "status": "FAILED"
         }
