@@ -33,9 +33,6 @@ const App = (props) => ({
             <Login {...props}/>
           </ToolbarGroup>
           <ToolbarGroup>
-            <VisibleNotificationList {...props}/>
-          </ToolbarGroup>
-          <ToolbarGroup>
             <IconMenu
               iconButtonElement={
                 <IconButton touch={true}>

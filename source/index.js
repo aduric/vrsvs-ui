@@ -4,11 +4,11 @@ import { Provider } from 'react-redux'
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk';
 import createHistory from 'history/createBrowserHistory'
-import vrsvsApp from './reducers'
+import rootReducer from './reducers'
 import App from './components/App'
 import NotFound from './components/NotFound'
 import Login from './components/Login'
-import VisibleUserList from './containers/VisibleUserList'
+import UserList from './components/UserList'
 import Lock from './containers/Lock'
 import VisibleChallengeList from './containers/VisibleChallengeList'
 import points from '../data/points.json'
@@ -25,6 +25,7 @@ import lightBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 import * as firebase from "firebase";
 import BottomNav from './components/BottomNav';
 import VerticalNonLinear from './components/VerticalNonLinear';
+import { reactReduxFirebase, getFirebase } from 'react-redux-firebase'
 
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941
@@ -32,17 +33,19 @@ injectTapEventPlugin();
 
 const history = createHistory()
 
+// Create store with reducers and initial state
 const store = createStore(
-  vrsvsApp, 
-  { "users": [], "challenges": [] }, 
+  rootReducer,
+  { "users": [], "challenges": [] },
   compose(
     applyMiddleware(routerMiddleware(history)), 
-    applyMiddleware(thunk),
-    autoRehydrate()))
-
-persistStore(store, {}, () => {
-  console.log('rehydration complete')
-})
+    applyMiddleware(thunk.withExtraArgument(getFirebase)),
+    reactReduxFirebase(config.firebase, {
+        userProfile: 'users',
+        enableLogging: false
+      })
+  )
+);
 
 // add auth0
 const auth = new AuthService(config.auth0clientid, config.auth0apikey, config.auth0uri)
@@ -72,7 +75,7 @@ render(
           <Route path="/" component={() => <App auth={auth} fbase={fbase}/>}/>
           <Route exact path="/" component={() => <VerticalNonLinear/>}/>
           <Route path="/login" component={Login}/>  
-          <PrivateRoute path="/users" component={() => <VisibleUserList auth={auth} fbase={fbase}/>}/>
+          <PrivateRoute path="/users" component={() => <UserList auth={auth} fbase={fbase}/>}/>
           <PrivateRoute path="/challenges" component={() => <VisibleChallengeList auth={auth} fbase={fbase}/>}/>
           <Route path="/" component={() => <BottomNav/>}/>
         </div>

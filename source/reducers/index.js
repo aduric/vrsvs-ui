@@ -1,14 +1,15 @@
 import { combineReducers } from 'redux'
 import { routerReducer } from 'react-router-redux'
+import { firebaseStateReducer } from 'react-redux-firebase'
 import users from './users'
 import challenges from './challenges'
-import notifications from './notifications'
 
-const vrsvsApp = combineReducers({
+// Add Firebase to reducers
+const rootReducer = combineReducers({
   users,
   challenges,
-  notifications,
+  firebase: firebaseStateReducer,
   routing: routerReducer
 })
 
-export default vrsvsApp
+export default rootReducer
