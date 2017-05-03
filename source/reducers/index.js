@@ -6,7 +6,6 @@ import challenges from './challenges'
 
 // Add Firebase to reducers
 const rootReducer = combineReducers({
-  users,
   challenges,
   firebase: firebaseStateReducer,
   routing: routerReducer

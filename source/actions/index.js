@@ -1,11 +1,12 @@
 
-export const addUser = (id, name, avatar) => {
+export const addUser = (id, name, avatar, friends) => {
     return {
         type: 'ADD_USER',
         payload: {
             id,
             name,
-            avatar
+            avatar,
+            friends
         }
     }
 }
@@ -200,6 +201,35 @@ function updateSeenNotifications(fbase, userId) {
             // The callback failed.
             console.error(error);
         });
+    }
+}
+
+export function addOrUpdateUser(profile) {
+    return (dispatch, getState, getFirebase) => {
+        const firebase = getFirebase()
+        const firebasePath = 'users/'+profile.user_id
+        const firebaseInfo = {
+          name: profile.name,          
+          avatar: profile.picture,
+          friends: profile.context.mutual_friends.data.map(f => 'facebook|'+f.id),
+          points: 0
+        }
+        firebase
+            .update(firebasePath, firebaseInfo)
+            .then(() => {
+                dispatch(sendNotification('User Added'))
+            })
+    }    
+}
+
+function sendNotifications(notification) {
+    console.log('sending notifications')
+    console.log(notification)
+    return {
+        type: 'SEND_NOTIFICATIONS',
+        payload: {
+            notification: notification
+        }
     }
 }
 

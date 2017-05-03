@@ -16,6 +16,7 @@ import NotificationsIcon from 'material-ui/svg-icons/social/notifications';
 import VisibleNotificationList from '../containers/VisibleNotificationList';
 import PointsBadge from './PointsBadge';
 import RaisedButton from 'material-ui/RaisedButton';
+import SvgIcon from 'material-ui/SvgIcon';
 
 
 const App = (props) => ({
@@ -28,7 +29,15 @@ const App = (props) => ({
     console.log(props)
     if(props.auth.loggedIn()) {
       return(
-        <AppBar title="vrsvs">
+        <AppBar title={
+          <div>            
+            <svg style={{width: "48px", height: "48px"}}>
+              <use xlinkHref='svg/vrsvs_icon.svg#Bear_logo'/>
+            </svg>
+            vrsvs
+          </div>
+            }>
+
           <ToolbarGroup> 
             <Login {...props}/>
           </ToolbarGroup>

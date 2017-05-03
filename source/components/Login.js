@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { addUser } from '../actions'
+import { addOrUpdateUser } from '../actions'
 import React, { PropTypes as T } from 'react'
 import AuthService from '../util/AuthService'
 import RaisedButton from 'material-ui/RaisedButton';
@@ -25,9 +25,10 @@ export class Login extends React.Component {
     }
     // listen to profile_updated events to update internal state
     props.auth.on('profile_updated', (newProfile) => {
+      console.log('profile_updated')
       console.log(this.props);
       this.setState({profile: newProfile})
-      this.props.dispatch(addUser(newProfile.user_id, newProfile.name, newProfile.picture));
+      this.props.dispatch(addOrUpdateUser(newProfile));
     })
   }
 

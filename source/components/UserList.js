@@ -10,17 +10,22 @@ import {
   firebaseConnect,
   isLoaded,
   isEmpty,
-  dataToJS
+  dataToJS,
+  populatedDataToJS
 } from 'react-redux-firebase'
 import _ from 'underscore'
 
+const populates = [
+  { child: 'friends', root: 'users' }
+]
+
 @firebaseConnect([
-  '/users'
+  { path: '/users/facebook|102815946953696', populates }
 ])
 @connect(
   ({ firebase }) => ({
     // Connect todos prop to firebase todos
-    users: dataToJS(firebase, '/users'),
+    users: dataToJS(firebase, '/users')
   })
 )
 class UserList extends React.Component {

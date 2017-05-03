@@ -40,10 +40,7 @@ const store = createStore(
   compose(
     applyMiddleware(routerMiddleware(history)), 
     applyMiddleware(thunk.withExtraArgument(getFirebase)),
-    reactReduxFirebase(config.firebase, {
-        userProfile: 'users',
-        enableLogging: false
-      })
+    reactReduxFirebase(config.firebase, {})
   )
 );
 
@@ -75,7 +72,7 @@ render(
           <Route path="/" component={() => <App auth={auth} fbase={fbase}/>}/>
           <Route exact path="/" component={() => <VerticalNonLinear/>}/>
           <Route path="/login" component={Login}/>  
-          <PrivateRoute path="/users" component={() => <UserList auth={auth} fbase={fbase}/>}/>
+          <PrivateRoute path="/users" component={() => <UserList auth={auth}/>}/>
           <PrivateRoute path="/challenges" component={() => <VisibleChallengeList auth={auth} fbase={fbase}/>}/>
           <Route path="/" component={() => <BottomNav/>}/>
         </div>

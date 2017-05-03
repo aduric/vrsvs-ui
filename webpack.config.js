@@ -25,6 +25,10 @@ module.exports = {
       }, 
       {test: /\.json$/,
         loader: 'json-loader'
+      },
+      {
+        test: /\.svg$/,
+        loader: 'react-svg-loader'
       }
     ]
   },

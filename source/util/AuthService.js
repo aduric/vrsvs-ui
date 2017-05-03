@@ -7,11 +7,7 @@ export default class AuthService extends EventEmitter {
   constructor(clientId, key, domain) {
     super();
     // Configure Auth0
-    this.lock = new Auth0Lock(clientId, domain, {
-      auth: {
-        responseType: "token"
-      }
-    });
+    this.lock = new Auth0Lock(clientId, domain, {});
     this.management = new ManagementClient({
       token: key,
       domain: domain
@@ -42,8 +38,10 @@ export default class AuthService extends EventEmitter {
       if (error) {
         console.log('Error loading the Profile', error)
       } else {
+        console.log('getting profile')
+        console.log(profile)
         this.setProfile(profile)
-        this.management.getUser({ id: profile.user_id }, this.getFacebookAccessToken)
+        //this.management.getUser({ id: profile.user_id }, this.getFacebookAccessToken)
       }
   }
 
@@ -91,6 +89,8 @@ export default class AuthService extends EventEmitter {
         //this.setToken(token);
         console.log('emitting this')
         console.log(this)
+        console.log('profile')
+        console.log(profile)
         this.emit('authenticated', {'idToken': token});
       }
     })
