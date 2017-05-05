@@ -19,9 +19,11 @@ const populates = [
   { child: 'friends', root: 'users' }
 ]
 
-@firebaseConnect([
-  { path: '/users/facebook|102815946953696', populates }
-])
+@firebaseConnect(() => {
+  const profile = localStorage.getItem('profile') ? JSON.parse(localStorage.profile) : {}
+  return [
+  { path: '/users/' + profile.user_id, populates }]
+})
 @connect(
   ({ firebase }) => ({
     users: dataToJS(firebase, '/users')

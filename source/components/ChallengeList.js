@@ -19,10 +19,12 @@ const populates = [
   { child: 'participant', root: 'users' }
 ]
 
-@firebaseConnect([
-  { path: '/challenges', queryParams: [ 'orderByChild=issuer', 'equalTo=facebook|102815946953696' ], populates },
-  { path: '/users' }
-])
+@firebaseConnect(() => {
+  const profile = localStorage.getItem('profile') ? JSON.parse(localStorage.profile) : {}
+  return [
+  { path: '/challenges', queryParams: [ 'orderByChild=issuer', 'equalTo=' + profile.user_id ], populates },
+  { path: '/users' }]
+})
 @connect(
   ({ firebase }) => ({
     challenges: populatedDataToJS(firebase, '/challenges', populates)
