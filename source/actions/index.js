@@ -22,14 +22,20 @@ export const updateUser = (id, user) => {
     }
 }
 
-export const updatePoints = (userId, points) => {
-    return {
-        type: 'UPDATE_POINTS',
-        payload: {
-            id: userId,
-            points,
-        }
-    }
+export const acceptChallenge = (challenge) => {
+    return updateChallenge(Object.assign({}, challenge, { status: "ACCEPTED" }))
+}
+
+export const rejectChallenge = (challenge) => {
+    return updateChallenge(Object.assign({}, challenge, { status: "REJECTED" }))
+}
+
+export const completeChallenge = (challenge) => {
+    return updateChallenge(Object.assign({}, challenge, { status: "COMPLETED" }))
+}
+
+export const failChallenge = (challenge) => {
+    return updateChallenge(Object.assign({}, challenge, { status: "FAILED" }))
 }
 
 export const addChallenge = (challenge_id, issuer_id, participant_id, description) => {
@@ -45,44 +51,22 @@ export const addChallenge = (challenge_id, issuer_id, participant_id, descriptio
     }
 }
 
-export const acceptChallenge = (challenge_id) => {
-    return {
-        type: 'UPDATE_CHALLENGE_STATUS',
-        payload: {
-            id: challenge_id,
-            status: "ACCEPTED"            
+function updateChallenge(challenge) {
+    return (dispatch, getState, getFirebase) => {
+        const firebase = getFirebase()
+        const firebasePath = 'challenges/' + challenge.id
+        const firebaseInfo = {
+            description: challenge.description,
+            status: challenge.status
         }
-    }
-}
-
-export const rejectChallenge = (challenge_id) => {
-    return {
-        type: 'UPDATE_CHALLENGE_STATUS',
-        payload: {
-            id: challenge_id,
-            status: "REJECTED"
-        }
-    }
-}
-
-export const completeChallenge = (challenge_id) => {
-    return {
-        type: 'UPDATE_CHALLENGE_STATUS',
-        payload: {
-            id: challenge_id,
-            status: "COMPLETED"
-        }
-    }
-}
-
-export const failChallenge = (challenge_id) => {
-    return {
-        type: 'UPDATE_CHALLENGE_STATUS',
-        payload: {
-            id: challenge_id,
-            status: "FAILED"
-        }
-    }
+        firebase
+            .update(firebasePath, firebaseInfo)
+            /*
+            .then(() => {
+                dispatch(sendNotification('Challenge Added'))
+            })
+            */
+    }    
 }
 
 function shouldFetchUsers(state, fbProvider) {}
@@ -204,21 +188,34 @@ function updateSeenNotifications(fbase, userId) {
     }
 }
 
-export function addOrUpdateUser(profile) {
+export function addUserFromFBProfile(profile) {
+    return addOrUpdateUser({
+        [profile.user_id]: {
+            name: profile.name,          
+            avatar: profile.picture,
+            friends: profile.context.mutual_friends.data.map(f => 'facebook|'+f.id)
+        }
+    })
+}
+
+export const updatePoints = (user, addPoints) => {
+    return addOrUpdateUser(Object.assign(
+        {}, 
+        user, 
+        { points: user.points == 'undefined' ? addPoints : user.points + addPoints }))
+}
+
+function addOrUpdateUser(user) {
     return (dispatch, getState, getFirebase) => {
         const firebase = getFirebase()
-        const firebasePath = 'users/'+profile.user_id
-        const firebaseInfo = {
-          name: profile.name,          
-          avatar: profile.picture,
-          friends: profile.context.mutual_friends.data.map(f => 'facebook|'+f.id),
-          points: 0
-        }
+        const firebasePath = 'users'
         firebase
-            .update(firebasePath, firebaseInfo)
+            .update(firebasePath, user)
+            /*
             .then(() => {
-                dispatch(sendNotification('User Added'))
+                dispatch(sendNotification('User Added / Updated'))
             })
+            */
     }    
 }
 

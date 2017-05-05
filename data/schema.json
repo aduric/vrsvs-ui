@@ -1,85 +1,78 @@
 {
-    "users": {
-        "facebook|102818030280913": {
-            "name": "Maria Wisemanescu",
-            "avatar": "https://scontent.xx.fbcdn.net/v/t1.0-1/c15.0.50.50/p50x50/1379841_10150004552801901_469209496895221757_n.jpg?oh=d9f13139f45ec1c9d1e05a32d1c897eb&oe=597AC533",
-            "notifications": [
-                {
-                    "status":"unseen",
-                    "message":"Your friend joined!"                    
-                }
-            ],
-            "points": 5
-        },
-        "facebook|104328326795339": {
-            "name": "Patricia Alisonson",
-            "avatar": "https://scontent.xx.fbcdn.net/v/t1.0-1/c15.0.50.50/p50x50/1379841_10150004552801901_469209496895221757_n.jpg?oh=d9f13139f45ec1c9d1e05a32d1c897eb&oe=597AC533",
-            "notifications": [
-                {
-                    "status":"unseen",
-                    "message":"Your friend joined!"            
-                }
-            ],
-            "points": 8
-        },
-        "facebook|104957340065140": {
-            "name": "Betty Liangstein",
-            "avatar": "https://scontent.xx.fbcdn.net/v/t1.0-1/c15.0.50.50/p50x50/1379841_10150004552801901_469209496895221757_n.jpg?oh=d9f13139f45ec1c9d1e05a32d1c897eb&oe=597AC533",
-            "notifications": [
-                {
-                    "status":"unseen",
-                    "message":"Your friend joined!"            
-                }
-            ],
-            "points": 7
-        },
-        "facebook|10154465429806996": {
-            "name": "Adnan Duric",
-            "avatar": "https://scontent.xx.fbcdn.net/v/t1.0-1/c68.36.455.455/s50x50/206169_419825386995_705786_n.jpg?oh=55f0b7dc5d7524fa777d8df428c1abc8&oe=598A36EE",
-            "notifications": [
-                {
-                    "status":"unseen",
-                    "message":"Your friend joined!"            
-                }
-            ],
-            "points": 3
-        }
+  "challenges" : {
+      "c1" : {
+        "description" : "Go to gym for 1 hour",
+        "issuer" : "facebook|102818030280913",
+        "participant" : "facebook|104328326795339",
+        "status" : "ISSUED"
     },
-    "challenges": [
-        {
-            "id": "1",
-            "issuer": "facebook|102818030280913",
-            "participant": "facebook|104328326795339",
-            "description": "Go to gym for 1 hour",
-            "status": "ISSUED"
-        },
-        {
-            "id": "2",
-            "issuer": "facebook|104328326795339",
-            "participant": "facebook|104957340065140",
-            "description": "Watch TV for 1 hour",
-            "status": "COMPLETED"
-        },
-        {
-            "id": "3",
-            "issuer": "facebook|104957340065140",
-            "participant": "facebook|109613809597364",
-            "description": "Go to gym for 1 hour",
-            "status": "REJECTED"
-        },
-        {
-            "id": "4",
-            "issuer": "facebook|104957340065140",
-            "participant": "facebook|104328326795339",
-            "description": "Go to gym for 1 hour",
-            "status": "ACCEPTED"
-        },
-        {
-            "id": "5",
-            "issuer": "facebook|104957340065140",
-            "participant": "facebook|104328326795339",
-            "description": "Go to gym for 1 hour",
-            "status": "FAILED"
-        }
-    ]        
+      "c2" : {
+        "description" : "Watch TV for 1 hour",
+        "issuer" : "facebook|104328326795339",
+        "participant" : "facebook|104957340065140",
+        "status" : "COMPLETED"
+    },
+      "c3" : {
+        "description" : "Go to gym for 1 hour",
+        "issuer" : "facebook|104957340065140",
+        "participant" : "facebook|109613809597364",
+        "status" : "REJECTED"
+    },
+      "c4" : {
+        "description" : "Go to gym for 1 hour",
+        "issuer" : "facebook|102815946953696",
+        "participant" : "facebook|104328326795339",
+        "status" : "ACCEPTED"
+    },
+      "c5" : {
+        "description" : "Go to gym for 1 hour",
+        "issuer" : "facebook|104957340065140",
+        "participant" : "facebook|104328326795339",
+        "status" : "FAILED"
+      }
+  },
+  "users" : {
+    "facebook|10154465429806996" : {
+      "avatar" : "https://scontent.xx.fbcdn.net/v/t1.0-1/c68.36.455.455/s50x50/206169_419825386995_705786_n.jpg?oh=55f0b7dc5d7524fa777d8df428c1abc8&oe=598A36EE",
+      "name" : "Adnan Duric",
+      "notifications" : [ {
+        "message" : "Your friend joined!",
+        "status" : "unseen"
+      } ],
+      "points" : 3
+    },
+    "facebook|102815946953696" : {
+      "avatar" : "https://scontent.xx.fbcdn.net/v/t1.0-1/c15.0.50.50/p50x50/1379841_10150004552801901_469209496895221757_n.jpg?oh=d9f13139f45ec1c9d1e05a32d1c897eb&oe=597AC533",
+      "friends" : [ "facebook|104957340065140", "facebook|102818030280913" ],
+      "name" : "Mary Alafgehgbdgib Sharpesen",
+      "points" : 0
+    },
+    "facebook|102818030280913" : {
+      "avatar" : "https://scontent.xx.fbcdn.net/v/t1.0-1/c15.0.50.50/p50x50/1379841_10150004552801901_469209496895221757_n.jpg?oh=d9f13139f45ec1c9d1e05a32d1c897eb&oe=597AC533",
+      "name" : "Maria Wisemanescu",
+      "notifications" : [ {
+        "message" : "Your friend joined!",
+        "status" : "unseen"
+      } ],
+      "points" : 5
+    },
+    "facebook|104328326795339" : {
+      "avatar" : "https://scontent.xx.fbcdn.net/v/t1.0-1/c15.0.50.50/p50x50/1379841_10150004552801901_469209496895221757_n.jpg?oh=d9f13139f45ec1c9d1e05a32d1c897eb&oe=597AC533",
+      "name" : "Patricia Alisonson",
+      "notifications" : [ {
+        "message" : "Your friend joined!",
+        "status" : "unseen"
+      } ],
+      "points" : 8
+    },
+    "facebook|104957340065140" : {
+      "avatar" : "https://scontent.xx.fbcdn.net/v/t1.0-1/c15.0.50.50/p50x50/1379841_10150004552801901_469209496895221757_n.jpg?oh=d9f13139f45ec1c9d1e05a32d1c897eb&oe=597AC533",
+      "name" : "Betty Liangstein",
+      "notifications" : [ {
+        "message" : "Your friend joined!",
+        "status" : "unseen"
+      } ],
+      "points" : 7
+    }
+  }
 }

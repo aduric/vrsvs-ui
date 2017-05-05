@@ -9,7 +9,7 @@ const style = {
   margin: 12,
 };
 
-let ChallengeActions = ({ id, status, issuerId, participantId }) => ({
+let ChallengeActions = (challenge) => ({
   isIssued() {
     return status == "ISSUED"
   },
@@ -17,21 +17,21 @@ let ChallengeActions = ({ id, status, issuerId, participantId }) => ({
     return status == "ACCEPTED"
   },
   handleAccept() {
-    console.log(id);
+    console.log(challenge.id);
     console.log("IssuerId");
-    console.log(issuerId);
-    this.props.dispatch(acceptChallenge(id));
-    this.props.dispatch(updatePoints(issuerId, 1));
+    console.log(challenge.issuer.id);
+    this.props.dispatch(acceptChallenge(challenge));
+    this.props.dispatch(updatePoints(challenge.issuer, 1));
   },
   handleReject() {
-    this.props.dispatch(rejectChallenge(id));
+    this.props.dispatch(rejectChallenge(challenge));
   },
   handleComplete() {
-    this.props.dispatch(completeChallenge(id));
-    this.props.dispatch(updatePoints(participantId, 3));
+    this.props.dispatch(completeChallenge(challenge));
+    this.props.dispatch(updatePoints(challenge.participant, 3));
   },
   handleFail() {
-    this.props.dispatch(failChallenge(id));
+    this.props.dispatch(failChallenge(challenge));
   },
   issuedActions() {
     return(
@@ -58,37 +58,22 @@ let ChallengeActions = ({ id, status, issuerId, participantId }) => ({
   }
 })
 
-ChallengeActions.PropTypes = {
-  id: PropTypes.string.isRequired,
-  status: PropTypes.string.isRequired,
-  participantId: PropTypes.string.isRequired,
-  issuerId: PropTypes.string.isRequired,
-}
-
 ChallengeActions = connect()(ChallengeActions);
 
-const Challenge = (challenge) => ({
+const Challenge = (props) => ({
   render() {
     return(
       <Card>
         <CardHeader
-          title={<div><Avatar src={challenge.issuer_details.avatar} /> {challenge.description}</div>}
-          subtitle={challenge.status}
+          title={<div><Avatar src={this.props.issuer.avatar} /> {this.props.description}</div>}
+          subtitle={this.props.status}
           actAsExpander={true}
           showExpandableButton={false}
         />
-        <ChallengeActions id={challenge.id} status={challenge.status} issuerId={challenge.issuer} participantId={challenge.participant} />
+        <ChallengeActions {...this.props}/>
       </Card>
     )
   }
 });
-
-Challenge.propTypes = {
-  id: PropTypes.string.isRequired, 
-  issuer: PropTypes.string.isRequired,
-  participant: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
-  status: PropTypes.string.isRequired
-}
 
 export default Challenge

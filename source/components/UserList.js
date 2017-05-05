@@ -24,7 +24,6 @@ const populates = [
 ])
 @connect(
   ({ firebase }) => ({
-    // Connect todos prop to firebase todos
     users: dataToJS(firebase, '/users')
   })
 )

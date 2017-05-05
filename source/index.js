@@ -26,6 +26,7 @@ import * as firebase from "firebase";
 import BottomNav from './components/BottomNav';
 import VerticalNonLinear from './components/VerticalNonLinear';
 import { reactReduxFirebase, getFirebase } from 'react-redux-firebase'
+import ChallengeList from './components/ChallengeList'
 
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941
@@ -73,7 +74,7 @@ render(
           <Route exact path="/" component={() => <VerticalNonLinear/>}/>
           <Route path="/login" component={Login}/>  
           <PrivateRoute path="/users" component={() => <UserList auth={auth}/>}/>
-          <PrivateRoute path="/challenges" component={() => <VisibleChallengeList auth={auth} fbase={fbase}/>}/>
+          <PrivateRoute path="/challenges" component={() => <ChallengeList auth={auth}/>}/>
           <Route path="/" component={() => <BottomNav/>}/>
         </div>
       </ConnectedRouter>
