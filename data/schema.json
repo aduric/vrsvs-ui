@@ -10,25 +10,49 @@
         "description" : "Watch TV for 1 hour",
         "issuer" : "facebook|104328326795339",
         "participant" : "facebook|104957340065140",
-        "status" : "COMPLETED"
+        "status" : "COMPLETED",
+        "responses" : [
+          {
+            "user" : "foo",
+            "message" : "bar"
+          }
+        ]
     },
       "c3" : {
         "description" : "Go to gym for 1 hour",
         "issuer" : "facebook|104957340065140",
         "participant" : "facebook|109613809597364",
-        "status" : "REJECTED"
+        "status" : "REJECTED",
+        "responses" : [
+          {
+            "user" : "foo",
+            "message" : "bar"
+          }
+        ]
     },
       "c4" : {
         "description" : "Go to gym for 1 hour",
         "issuer" : "facebook|102815946953696",
         "participant" : "facebook|104328326795339",
-        "status" : "ACCEPTED"
+        "status" : "ACCEPTED",
+        "responses" : [
+          {
+            "user" : "foo",
+            "message" : "bar"
+          }
+        ]
     },
       "c5" : {
         "description" : "Go to gym for 1 hour",
         "issuer" : "facebook|104957340065140",
         "participant" : "facebook|104328326795339",
-        "status" : "FAILED"
+        "status" : "FAILED",
+        "responses" : [
+          {
+            "user" : "foo",
+            "message" : "bar"
+          }
+        ]
       }
   },
   "users" : {
