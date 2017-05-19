@@ -1,9 +1,12 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
+import ChallengeResponseList from './ChallengeResponseList'
+import ChallengeResponseForm from './ChallengeResponseForm'
 import { acceptChallenge, rejectChallenge, completeChallenge, failChallenge, updatePoints } from '../actions'
-import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
+import {Card, CardActions, CardHeader, CardText, CardMedia} from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import Avatar from 'material-ui/Avatar';
+import Divider from 'material-ui/Divider';
 
 const style = {
   margin: 12,
@@ -63,15 +66,25 @@ ChallengeActions = connect()(ChallengeActions);
 const Challenge = (props) => ({
   render() {
     return(
-      <Card>
-        <CardHeader
-          title={<div><Avatar src={this.props.issuer.avatar} /> {this.props.description}</div>}
-          subtitle={this.props.status}
-          actAsExpander={true}
-          showExpandableButton={false}
-        />
-        <ChallengeActions {...this.props}/>
-      </Card>
+      <div>
+        <Card>
+          <CardHeader
+            title={<div><Avatar src={this.props.issuer.avatar} /> {this.props.description}</div>}
+            subtitle={this.props.status}
+            actAsExpander={true}
+            showExpandableButton={true}
+          />
+          <CardMedia
+            expandable={true}>
+            <div>
+              <ChallengeResponseForm id={this.props.id} responder={this.props.participant}/>
+              <Divider inset={true} />
+              <ChallengeResponseList id={this.props.id}/>
+            </div>
+          </CardMedia>
+          <ChallengeActions {...this.props}/>
+        </Card>
+      </div>
     )
   }
 });

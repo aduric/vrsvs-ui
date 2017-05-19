@@ -1,67 +1,61 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
+import {List, ListItem} from 'material-ui/List';
+import Notification from './Notification'
+import { fetchChallengesIfNeeded } from '../actions'
+import Subheader from 'material-ui/Subheader';
+import Divider from 'material-ui/Divider';
 import { connect } from 'react-redux'
-import IconButton from 'material-ui/IconButton';
-import IconMenu from 'material-ui/IconMenu';
-import MenuItem from 'material-ui/MenuItem';
-import baseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import Badge from 'material-ui/Badge';
-import NotificationsIcon from 'material-ui/svg-icons/social/notifications';
-import { fetchNotificationsIfNeeded, handleSeen } from '../actions'
+import {
+  firebaseConnect,
+  isLoaded,
+  isEmpty,
+  dataToJS,
+  populatedDataToJS
+} from 'react-redux-firebase'
+import _ from 'underscore'
 
-class NotificationList extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-        notifications: []
-    };
-  }
-  getChildContext() {
-      return { muiTheme: getMuiTheme(baseTheme) };
-  }
-  componentDidMount() {
-    const { dispatch } = this.props
-    dispatch(fetchNotificationsIfNeeded(this.props.fbase, this.props.auth.getProfile().user_id))
-    
-    //this.bindAsArray(firebaseRef.limitToLast(10), 'notifications');
-    console.log('fetching notifications')
-  }
-  handleSeen() {
-      console.log('handle seen')
-      const { dispatch } = this.props
-      dispatch(handleSeen(this.props.fbase, this.props.auth.getProfile().user_id))
+const populates = [
+  { child: 'subject', root: '/users' },
+  { child: 'object', root: '/users' },
+  { child: 'resource', root: '' },
+]
+
+@firebaseConnect(() => {
+  const profile = localStorage.getItem('profile') ? JSON.parse(localStorage.profile) : {}
+  return [
+  { path: '/notifications', queryParams: [ 'orderByChild=subject', 'equalTo=' + profile.user_id ] },
+  { path: '/users' },
+  { path: '/challenges' }]
+})
+@connect(
+  ({ firebase }) => ({
+    notifications: populatedDataToJS(firebase, 'notifications', populates)
+  })
+)
+export default class NotificationList extends React.Component {
+  static propTypes = {
+    notifications: PropTypes.object,
+    firebase: PropTypes.object
   }
   render() {
-      console.log('rednering notifications')
-      console.log(this.props)
-    return(
-        <IconMenu
-            onItemTouchTap={() => this.handleSeen()}
-            iconButtonElement={     
-                <Badge
-                    badgeContent={this.props.notifications.length}
-                    secondary={true}
-                    badgeStyle={{top: 8, right: 8}}
-                    style={{padding: "12px 12px 12px 12px"}}>
-                    <IconButton 
-                        tooltip="Notifications">
-                        <NotificationsIcon />
-                    </IconButton>
-                </Badge>
-            }
-            targetOrigin={{horizontal: 'right', vertical: 'top'}}
-            anchorOrigin={{horizontal: 'right', vertical: 'top'}}>
-            {
-                this.props.notifications.map(n =>
-                    <MenuItem primaryText={n.message} />
-            )}
-        </IconMenu>
-    );
+    const { firebase, notifications } = this.props;
+    console.log('rendering notifications');
+    console.log(this.props)
+    const notificationsList = !isLoaded(notifications)
+      ? 'Loading'
+      : isEmpty(notifications)
+        ? <p style={{"padding-left": "16px"}}>You have no notifications</p>
+        : _.map(notifications, (v, k) =>
+          <Notification
+            key={k}
+            id={k}
+            {...v}
+          />
+        )
+      return(
+        <div>
+          {notificationsList}
+        </div>
+      )
   }
 }
-
-NotificationList.childContextTypes = {
-    muiTheme: React.PropTypes.object.isRequired,
-};
-
-export default connect()(NotificationList)

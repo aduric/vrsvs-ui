@@ -7,26 +7,22 @@ import ReactPlayer from 'react-player'
 import {grey400, darkBlack, lightBlack} from 'material-ui/styles/colors';
 
 
-const ChallengeResponse = (props) => ({
+const Notification = (props) => ({
   render() {
+    const { resource, message, subject, object } = this.props;
     return(
       <Card>
         <CardHeader
-          title={this.props.responder.name}
-          subtitle={this.props.response_vid === 'undefined' ? this.props.response_msg : null}
-          avatar={this.props.responder.avatar}
+          title={eval(message)}
+          avatar={<svg style={{width: "48px", height: "48px"}}>
+              <use xlinkHref='svg/vrsvs_icon.svg#Bear_logo'/>
+            </svg>}
           actAsExpander={false}
           showExpandableButton={false}
         />
-        {this.props.response_vid !== 'undefined' ?
-        <CardMedia
-          overlay={<CardTitle title={this.props.response_msg} />}
-        >
-          <ReactPlayer url={this.props.response_vid.downloadURL} playing loop/>
-        </CardMedia> : null}
       </Card>
     )
   }
 });
 
-export default ChallengeResponse
+export default Notification;

@@ -22,7 +22,7 @@ const populates = [
 @firebaseConnect(() => {
   const profile = localStorage.getItem('profile') ? JSON.parse(localStorage.profile) : {}
   return [
-  { path: '/challenges', queryParams: [ 'orderByChild=issuer', 'equalTo=' + profile.user_id ], populates },
+  { path: '/challenges', queryParams: [ 'orderByChild=participant', 'equalTo=' + profile.user_id ], populates },
   { path: '/users' }]
 })
 @connect(

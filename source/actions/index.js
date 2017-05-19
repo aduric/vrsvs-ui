@@ -38,6 +38,23 @@ export const failChallenge = (challenge) => {
     return updateChallenge(Object.assign({}, challenge, { status: "FAILED" }))
 }
 
+export const addUpdateChallengeResponse = (challengeid, id, responderid, response_msg, response_vid) => {
+    return (dispatch, getState, getFirebase) => {
+        const firebase = getFirebase()
+        const firebasePath = 'challenges/' + challengeid + '/responses/'
+        const firebaseInfo = {
+            [id]: {
+                responder: responderid,
+                response_msg: response_msg,
+                response_vid: response_vid,
+                timestamp: Date.now()
+            }
+        }
+        firebase
+            .update(firebasePath, firebaseInfo)
+    }    
+}
+
 export const addChallenge = (challenge_id, issuer_id, participant_id, description) => {
     return {
         type: 'ADD_CHALLENGE',

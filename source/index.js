@@ -24,7 +24,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import lightBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 import * as firebase from "firebase";
 import BottomNav from './components/BottomNav';
-import VerticalNonLinear from './components/VerticalNonLinear';
+import NotificationList from './components/NotificationList';
 import { reactReduxFirebase, getFirebase } from 'react-redux-firebase'
 import ChallengeList from './components/ChallengeList'
 
@@ -71,7 +71,7 @@ render(
       <ConnectedRouter history={history}>
         <div>
           <Route path="/" component={() => <App auth={auth} fbase={fbase}/>}/>
-          <Route exact path="/" component={() => <VerticalNonLinear/>}/>
+          <Route exact path="/" component={() => <NotificationList/>}/>
           <Route path="/login" component={Login}/>  
           <PrivateRoute path="/users" component={() => <UserList auth={auth}/>}/>
           <PrivateRoute path="/challenges" component={() => <ChallengeList auth={auth}/>}/>
