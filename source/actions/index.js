@@ -52,6 +52,17 @@ export const addUpdateChallengeResponse = (challengeid, id, responderid, respons
         }
         firebase
             .update(firebasePath, firebaseInfo)
+            .then(() => {
+                    var notification = {
+                        "message" : "object.name + ' replied in ' + resource.description",
+                        "object" : challenge.issuer_id,
+                        "resource" : "challenges/" + challenge.id,
+                        "status" : "unseen",
+                        "subject" : challenge.participant_id,
+                        "timestamp" : Date.now()
+                    };
+                    dispatch(sendNotification(notification))
+                })
     }    
 }
 
@@ -78,11 +89,27 @@ function updateChallenge(challenge) {
         }
         firebase
             .update(firebasePath, firebaseInfo)
-            /*
             .then(() => {
-                dispatch(sendNotification('Challenge Added'))
-            })
-            */
+                var notification_msg = "object.name + ' updated ' + resource.description"
+                if(challenge.status === "ISSUED") {
+                    notification_msg = "object.name + ' challenged you to ' + resource.description";
+                } else if(challenge.status === "COMPLETED") {
+                    notification_msg = "object.name + ' completed your challenge ' + resource.description";
+                } else if(challenge.status === "FAILED") {
+                    notification_msg = "object.name + ' failed your challenge ' + resource.description";
+                } else if(challenge.status === "REJECTED") {
+                    notification_msg = "object.name + ' failed your challenge ' + resource.description";
+                }
+                    var notification = {
+                        "message" : notification_msg,
+                        "object" : challenge.issuer_id,
+                        "resource" : "challenges/" + challenge.id,
+                        "status" : "unseen",
+                        "subject" : challenge.participant_id,
+                        "timestamp" : Date.now()
+                    };
+                    dispatch(sendNotification(notification))
+                })
     }    
 }
 
@@ -228,11 +255,19 @@ function addOrUpdateUser(user) {
         const firebasePath = 'users'
         firebase
             .update(firebasePath, user)
-            /*
             .then(() => {
-                dispatch(sendNotification('User Added / Updated'))
+                user.friends.forEach(friend => {
+                    var notification = {
+                        "message" : "Your friend " + object.name + " joined!",
+                        "object" : user.user_id,
+                        "resource" : "users/" + user.user_id,
+                        "status" : "unseen",
+                        "subject" : friend.user_id,
+                        "timestamp" : Date.now()
+                    };
+                    dispatch(sendNotification(notification))
+                })
             })
-            */
     }    
 }
 
