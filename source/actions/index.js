@@ -21,7 +21,7 @@ export const addChallenge = (id, issuerId, participantId, description) => {
         [id]: {
             issuer: issuerId,          
             participant: participantId,
-            desription: description,
+            description: description,
             status: "ISSUED"
         }})
 }
