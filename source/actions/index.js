@@ -1,26 +1,4 @@
-
-export const addUser = (id, name, avatar, friends) => {
-    return {
-        type: 'ADD_USER',
-        payload: {
-            id,
-            name,
-            avatar,
-            friends
-        }
-    }
-}
-
-export const updateUser = (id, user) => {
-    return {
-        type: 'UPDATE_USER',
-        payload: {
-            id: id,
-            user: user.name,
-            avatar: user.avatar,
-        }
-    }
-}
+import uuid from 'node-uuid';
 
 export const acceptChallenge = (challenge) => {
     return updateChallenge(Object.assign({}, challenge, { status: "ACCEPTED" }))
@@ -66,19 +44,6 @@ export const addUpdateChallengeResponse = (challengeid, id, responderid, respons
     }    
 }
 
-export const addChallenge = (challenge_id, issuer_id, participant_id, description) => {
-    return {
-        type: 'ADD_CHALLENGE',
-        payload: {
-            id: challenge_id,
-            issuer_id,
-            participant_id,
-            description,
-            status: "ISSUED"            
-        }
-    }
-}
-
 function updateChallenge(challenge) {
     return (dispatch, getState, getFirebase) => {
         const firebase = getFirebase()
@@ -113,125 +78,6 @@ function updateChallenge(challenge) {
     }    
 }
 
-function shouldFetchUsers(state, fbProvider) {}
-function fetchUsers(fbProvider) {
-    return dispatch => {
-        dispatch(requestUsers())
-        return fbProvider.api('me/friends?fields=id,name,picture', function(res) {
-            var users = []
-            if(!res || res.error) {
-                console.log(!res ? 'error occurred' : res.error);
-            } else {
-                console.log('got friends')
-                console.log(res)
-                users = res.data
-            }
-            dispatch(receiveUsers(users));
-        });
-    }
-}
-function receiveUsers(users) {
-    console.log('receive users')
-    console.log(users)
-    return {
-        type: 'RECEIVE_USERS',
-        payload: {
-            users: users
-        }
-    }
-}
-function requestUsers() {
-        console.log('REQUEST_USERS')
-    return {
-        type: 'REQUEST_USERS'
-    }
-}
-export function fetchUsersIfNeeded(fbProvider) {
-    return (dispatch, getState) => {
-        return dispatch(fetchUsers(fbProvider))
-    }    
-}
-export function fetchPoints(fbase, userId) {
-    return (dispatch, getState) => {
-        return fbase.database().ref('users/' + userId + '/points').once('value', function(snapshot) {
-            var points = snapshot.val();
-            console.log('data from firebase - points')
-            console.log(points)
-            dispatch(updatePoints(userId, points));
-        }, function(error) {
-            // The callback failed.
-            console.error(error);
-        });
-    }
-}
-function fetchNotifications(fbase, userId) {
-    console.log('data from firebase top')
-    console.log(fbase)
-    return dispatch => {
-        return fbase.database().ref('users/' + userId + '/notifications').once('value', function(snapshot) {
-            var notifications = snapshot.val();
-            console.log('data from firebase')
-            console.log(notifications)
-            dispatch(receiveNotifications(notifications));
-        }, function(error) {
-            // The callback failed.
-            console.error(error);
-        });
-    }
-}
-function receiveNotifications(notifications) {
-    console.log('receive notifications')
-    console.log(notifications)
-    return {
-        type: 'RECEIVE_USER_NOTIFICATIONS',
-        payload: {
-            notifications: notifications
-        }
-    }
-}
-
-function fetchChallenges(fbase, userId) {
-    console.log('data from firebase top')
-    console.log(fbase)
-    return dispatch => {
-        return fbase.database().ref('challenges').once('value', function(snapshot) {
-            var challenges = snapshot.val();
-            console.log('data from firebase')
-            console.log(challenges)
-            dispatch(receiveChallenges(challenges));
-        }, function(error) {
-            // The callback failed.
-            console.error(error);
-        });
-    }
-}
-function receiveChallenges(challenges) {
-    console.log('receive notifications')
-    console.log(challenges)
-    return {
-        type: 'RECEIVE_CHALLENGES',
-        payload: {
-            challenges: challenges
-        }
-    }
-}
-
-function updateSeenNotifications(fbase, userId) {
-    return dispatch => {
-        return fbase.database().ref('users/' + userId + '/notifications').once('value', function(snapshot) {
-            var updates = {};
-            snapshot.forEach(function(child) {
-                updates[child.key + '/status'] = "seen";
-            });
-            fbase.database().ref('users/' + userId + '/notifications').update(updates);
-            dispatch(receiveNotifications([]));
-        }, function(error) {
-            // The callback failed.
-            console.error(error);
-        });
-    }
-}
-
 export function addUserFromFBProfile(profile) {
     return addOrUpdateUser({
         [profile.user_id]: {
@@ -253,49 +99,41 @@ function addOrUpdateUser(user) {
     return (dispatch, getState, getFirebase) => {
         const firebase = getFirebase()
         const firebasePath = 'users'
-        firebase
-            .update(firebasePath, user)
-            .then(() => {
-                user.friends.forEach(friend => {
-                    var notification = {
-                        "message" : "Your friend " + object.name + " joined!",
-                        "object" : user.user_id,
-                        "resource" : "users/" + user.user_id,
-                        "status" : "unseen",
-                        "subject" : friend.user_id,
-                        "timestamp" : Date.now()
-                    };
-                    dispatch(sendNotification(notification))
-                })
+        var user_id = Object.keys(user)[0]
+        var user_details = user[user_id]
+
+        firebase.ref('users').once('value')
+            .then(snapshot => {
+                return snapshot.hasChild(user_id)})
+            .then(userExists => {
+                firebase.update(firebasePath, user)
+                    .then(() => {
+                        user_details.friends.forEach(friend => {
+                            var notification = {
+                                "message" : "'Your friend ' + object.name + ' joined!'",
+                                "object" : user_id,
+                                "resource" : "users/" + user_id,
+                                "status" : "unseen",
+                                "subject" : friend,
+                                "timestamp" : Date.now()
+                            };
+                            if(!userExists) {
+                                dispatch(sendNotification(notification))
+                            }
+                        })
+                    })
             })
     }    
 }
 
-function sendNotifications(notification) {
-    console.log('sending notifications')
-    console.log(notification)
-    return {
-        type: 'SEND_NOTIFICATIONS',
-        payload: {
-            notification: notification
+function sendNotification(notification) {
+    return (dispatch, getState, getFirebase) => {
+        const firebase = getFirebase()
+        const firebasePath = 'notifications'
+        var payload = {
+            [uuid.v4()]: notification
         }
-    }
-}
-
-export function fetchNotificationsIfNeeded(fbase, userId) {
-    return (dispatch, getState) => {
-        return dispatch(fetchNotifications(fbase, userId))
-    }    
-}
-
-export function fetchChallengesIfNeeded(fbase, userId) {
-    return (dispatch, getState) => {
-        return dispatch(fetchChallenges(fbase, userId))
-    }    
-}
-
-export function handleSeen(fbase, userId) {
-    return (dispatch, getState) => {
-        return dispatch(updateSeenNotifications(fbase, userId))
-    }    
+        firebase
+            .update(firebasePath, payload)
+    } 
 }

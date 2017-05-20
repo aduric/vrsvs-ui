@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { addOrUpdateUser } from '../actions'
+import { addUserFromFBProfile } from '../actions'
 import React, { PropTypes as T } from 'react'
 import AuthService from '../util/AuthService'
 import RaisedButton from 'material-ui/RaisedButton';
@@ -28,7 +28,7 @@ export class Login extends React.Component {
       console.log('profile_updated')
       console.log(this.props);
       this.setState({profile: newProfile})
-      this.props.dispatch(addOrUpdateUser(newProfile));
+      this.props.dispatch(addUserFromFBProfile(newProfile));
     })
   }
 
