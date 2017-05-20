@@ -7,6 +7,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
+import Snackbar from 'material-ui/Snackbar';
 import uuid from 'node-uuid';
 
 class UserChallenge extends React.Component {
@@ -15,9 +16,9 @@ class UserChallenge extends React.Component {
     super(props)
     this.state = {
       open: props.open,
+      snack_open: false,
       participantId: props.participantId,
       participantName: props.participantName,
-      issuerId: props.issuerId,
       description: ""
     };
 
@@ -35,11 +36,15 @@ class UserChallenge extends React.Component {
     console.log(this.state.description.trim());
     console.log(this.state.participantId);
     console.log(this.state.issuerId);
-    if (this.state.description.trim() == "" || !this.state.participantId || !this.state.issuerId) {
+    if (this.state.description.trim() == "" || !this.state.participantId) {
       return
     }
-    this.props.dispatch(addChallenge(uuid.v4(), this.state.issuerId, this.state.participantId, this.state.description.trim()));
+    const profile = localStorage.getItem('profile') ? JSON.parse(localStorage.profile) : {}    
+    this.props.dispatch(addChallenge(uuid.v4(), profile.user_id, this.state.participantId, this.state.description.trim()));
     this.props.handleClose();
+    this.setState({
+      snack_open: true,
+    });
   }
 
   render() {
@@ -73,6 +78,12 @@ class UserChallenge extends React.Component {
           onChange={this.handleTextChange}
           />          
         </Dialog>
+        <Snackbar
+          open={this.state.snack_open}
+          message="Challenge created!"
+          autoHideDuration={4000}
+          onRequestClose={this.handleRequestClose}
+        />
       </div>
     )
   }

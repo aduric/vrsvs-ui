@@ -46,6 +46,8 @@ class User extends React.Component {
     this.setState({open: false});  
   }
   render() {
+    console.log('user props')
+    console.log(this.props)
     return(
       <div>
         <UserChallenge 
@@ -53,8 +55,7 @@ class User extends React.Component {
           handleOpen={() => this.handleOpen()}
           handleClose={() => this.handleClose()}
           participantId={this.props.id}
-          participantName={this.props.name}
-          issuerId={this.props.meid}/>
+          participantName={this.props.name}/>
         <ListItem
           leftAvatar={<Avatar src={this.props.avatar} />}
           rightAvatar={

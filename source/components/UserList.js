@@ -42,12 +42,12 @@ class UserList extends React.Component {
       ? 'Loading'
       : isEmpty(users)
         ? <p style={{"padding-left": "16px"}}>There are no active friends. Invite some!</p>
-        : _.map(users, user =>
+        : _.map(users, (v, k) =>
           <div>
             <User
-              key={user.id} 
-              meid={this.props.profileId}
-              {...user}
+              key={k}
+              id={k}
+              {...v}
             />
             <Divider inset={true} />
           </div>

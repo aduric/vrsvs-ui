@@ -16,6 +16,16 @@ export const failChallenge = (challenge) => {
     return updateChallenge(Object.assign({}, challenge, { status: "FAILED" }))
 }
 
+export const addChallenge = (id, issuerId, participantId, description) => {
+    return updateChallenge({
+        [id]: {
+            issuer: issuerId,          
+            participant: participantId,
+            desription: description,
+            status: "ISSUED"
+        }})
+}
+
 export const addUpdateChallengeResponse = (challengeid, id, responderid, response_msg, response_vid) => {
     return (dispatch, getState, getFirebase) => {
         const firebase = getFirebase()
@@ -47,34 +57,32 @@ export const addUpdateChallengeResponse = (challengeid, id, responderid, respons
 function updateChallenge(challenge) {
     return (dispatch, getState, getFirebase) => {
         const firebase = getFirebase()
-        const firebasePath = 'challenges/' + challenge.id
-        const firebaseInfo = {
-            description: challenge.description,
-            status: challenge.status
-        }
+        const firebasePath = 'challenges/'
+        var c_id = Object.keys(challenge)[0]
+        var c_details = challenge[c_id]
         firebase
-            .update(firebasePath, firebaseInfo)
+            .update(firebasePath, challenge)
             .then(() => {
                 var notification_msg = "object.name + ' updated ' + resource.description"
-                if(challenge.status === "ISSUED") {
+                if(c_details.status === "ISSUED") {
                     notification_msg = "object.name + ' challenged you to ' + resource.description";
-                } else if(challenge.status === "COMPLETED") {
+                } else if(c_details.status === "COMPLETED") {
                     notification_msg = "object.name + ' completed your challenge ' + resource.description";
-                } else if(challenge.status === "FAILED") {
+                } else if(c_details.status === "FAILED") {
                     notification_msg = "object.name + ' failed your challenge ' + resource.description";
-                } else if(challenge.status === "REJECTED") {
+                } else if(c_details.status === "REJECTED") {
                     notification_msg = "object.name + ' failed your challenge ' + resource.description";
                 }
-                    var notification = {
-                        "message" : notification_msg,
-                        "object" : challenge.issuer_id,
-                        "resource" : "challenges/" + challenge.id,
-                        "status" : "unseen",
-                        "subject" : challenge.participant_id,
-                        "timestamp" : Date.now()
-                    };
-                    dispatch(sendNotification(notification))
-                })
+                var notification = {
+                    "message" : notification_msg,
+                    "object" : c_details.issuer,
+                    "resource" : "challenges/" + c_id,
+                    "status" : "unseen",
+                    "subject" : c_details.participant,
+                    "timestamp" : Date.now()
+                };
+                dispatch(sendNotification(notification))
+            })
     }    
 }
 
