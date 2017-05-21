@@ -19,8 +19,12 @@ const populates = [
   { child: 'response_vid', root: 'uploadedFiles' }
 ]
 
+// HACK
+var currentId = null;
+
 @firebaseConnect(({ id }) => {
   console.log(id)
+  currentId = id;
   return [
   { path: '/challenges/' + id + '/responses' },
   { path: '/users' },
@@ -28,10 +32,8 @@ const populates = [
 })
 @connect(
   ({ firebase }) => {
-    var loadedChallenge = dataToJS(firebase, 'challenges');
-    var loadedChallengeName = Object.keys(loadedChallenge)[0];
     return {
-      responses: populatedDataToJS(firebase, 'challenges/' + loadedChallengeName + '/responses', populates)
+      responses: populatedDataToJS(firebase, 'challenges/' + currentId + '/responses', populates)
     }
   }
 )

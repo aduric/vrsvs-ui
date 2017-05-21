@@ -2,7 +2,6 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import ChallengeResponseList from './ChallengeResponseList'
 import ChallengeResponseForm from './ChallengeResponseForm'
-import ChallengeActions from './ChallengeActions'
 import { acceptChallenge, rejectChallenge, completeChallenge, failChallenge, updatePoints } from '../actions'
 import {Card, CardActions, CardHeader, CardText, CardMedia} from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -13,14 +12,14 @@ const style = {
   margin: 12,
 };
 
-const Challenge = (props) => ({
+const MyChallenge = (props) => ({
   render() {
     return(
       <div>
         <Card>
           <CardHeader
             avatar={this.props.issuer.avatar}
-            title={this.props.issuer.name + " challenged you"}
+            title={"You have challenged " + this.props.participant.name}
             subtitle={this.props.description}
             actAsExpander={true}
             showExpandableButton={true}
@@ -33,11 +32,10 @@ const Challenge = (props) => ({
               <ChallengeResponseList id={this.props.id}/>
             </div>
           </CardMedia>
-          <ChallengeActions {...this.props}/>
         </Card>
       </div>
     )
   }
 });
 
-export default Challenge
+export default MyChallenge

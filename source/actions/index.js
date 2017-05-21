@@ -1,31 +1,5 @@
 import uuid from 'node-uuid';
 
-export const acceptChallenge = (challenge) => {
-    return updateChallenge(Object.assign({}, challenge, { status: "ACCEPTED" }))
-}
-
-export const rejectChallenge = (challenge) => {
-    return updateChallenge(Object.assign({}, challenge, { status: "REJECTED" }))
-}
-
-export const completeChallenge = (challenge) => {
-    return updateChallenge(Object.assign({}, challenge, { status: "COMPLETED" }))
-}
-
-export const failChallenge = (challenge) => {
-    return updateChallenge(Object.assign({}, challenge, { status: "FAILED" }))
-}
-
-export const addChallenge = (id, issuerId, participantId, description) => {
-    return updateChallenge({
-        [id]: {
-            issuer: issuerId,          
-            participant: participantId,
-            description: description,
-            status: "ISSUED"
-        }})
-}
-
 export const addUpdateChallengeResponse = (challengeid, id, responderid, response_msg, response_vid) => {
     return (dispatch, getState, getFirebase) => {
         const firebase = getFirebase()
@@ -54,35 +28,90 @@ export const addUpdateChallengeResponse = (challengeid, id, responderid, respons
     }    
 }
 
-function updateChallenge(challenge) {
+export const acceptChallenge = (id) => {
+    return updateChallenge(id, { status: "ACCEPTED" })
+}
+
+export const rejectChallenge = (id) => {
+    return updateChallenge(id, { status: "REJECTED" })
+}
+
+export const completeChallenge = (id) => {
+    return updateChallenge(id, { status: "COMPLETED" })
+}
+
+export const failChallenge = (id) => {
+    return updateChallenge(id, { status: "FAILED" })
+}
+
+const updateChallenge = (id, payload) => {
+    return (dispatch, getState, getFirebase) => {
+        const firebase = getFirebase()
+        const firebasePath = 'challenges/' + id
+        firebase.ref(firebasePath).once('value')
+            .then(snapshot => {
+                var data = snapshot.val()
+                firebase.update(firebasePath, payload)
+                    .then(() => {
+                        var notification_msg = "object.name + ' updated ' + resource.description"
+                        if(payload.status === "ISSUED") {
+                            notification_msg = "object.name + ' challenged you to ' + resource.description";
+                        } else if(payload.status === "COMPLETED") {
+                            notification_msg = "object.name + ' completed your challenge ' + resource.description";
+                        } else if(payload.status === "FAILED") {
+                            notification_msg = "object.name + ' failed your challenge ' + resource.description";
+                        } else if(payload.status === "REJECTED") {
+                            notification_msg = "object.name + ' failed your challenge ' + resource.description";
+                        }
+                        var notification = {
+                            "message" : notification_msg,
+                            "object" : data.issuer,
+                            "resource" : "challenges/" + id,
+                            "status" : "unseen",
+                            "subject" : data.participant,
+                            "timestamp" : Date.now()
+                        };
+                        dispatch(sendNotification(notification))
+                    })
+            })
+    }    
+}
+
+
+export const addChallenge = (id, issuerId, participantId, description) => {
     return (dispatch, getState, getFirebase) => {
         const firebase = getFirebase()
         const firebasePath = 'challenges/'
-        var c_id = Object.keys(challenge)[0]
-        var c_details = challenge[c_id]
         firebase
-            .update(firebasePath, challenge)
+            .update(firebasePath, {
+                [id]: {
+                    issuer: issuerId,          
+                    participant: participantId,
+                    description: description,
+                    status: "ISSUED"
+                }})
             .then(() => {
-                var notification_msg = "object.name + ' updated ' + resource.description"
-                if(c_details.status === "ISSUED") {
-                    notification_msg = "object.name + ' challenged you to ' + resource.description";
-                } else if(c_details.status === "COMPLETED") {
-                    notification_msg = "object.name + ' completed your challenge ' + resource.description";
-                } else if(c_details.status === "FAILED") {
-                    notification_msg = "object.name + ' failed your challenge ' + resource.description";
-                } else if(c_details.status === "REJECTED") {
-                    notification_msg = "object.name + ' failed your challenge ' + resource.description";
-                }
                 var notification = {
-                    "message" : notification_msg,
-                    "object" : c_details.issuer,
-                    "resource" : "challenges/" + c_id,
+                    "message" : "object.name + ' challenged you to ' + resource.description",
+                    "object" : issuerId,
+                    "resource" : "challenges/" + id,
                     "status" : "unseen",
-                    "subject" : c_details.participant,
+                    "subject" : participantId,
                     "timestamp" : Date.now()
                 };
                 dispatch(sendNotification(notification))
             })
+            .then(() => addUserChallenges(issuerId, id))
+    }    
+}
+
+const addUserChallenges = (issuerid, challengeid) => {
+    return (dispatch, getState, getFirebase) => {
+        const firebase = getFirebase()
+        const firebasePath = 'users/' + issuerid + '/challenges/'
+
+        firebase
+            .update(firebasePath, challengeid)
     }    
 }
 

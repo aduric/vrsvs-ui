@@ -29,15 +29,12 @@ const App = (props) => ({
     console.log(props)
     if(props.auth.loggedIn()) {
       return(
-        <AppBar title={
-          <div>            
+        <AppBar 
+          title={'vrsvs'}
+          iconElementLeft={
             <svg style={{width: "48px", height: "48px"}}>
               <use xlinkHref='svg/vrsvs_icon.svg#Bear_logo'/>
-            </svg>
-            vrsvs
-          </div>
-            }>
-
+            </svg>}>
           <ToolbarGroup> 
             <Login {...props}/>
           </ToolbarGroup>

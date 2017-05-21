@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import { connect } from 'react-redux'
+import { push } from 'react-router-redux'
 import FontIcon from 'material-ui/FontIcon';
 import {BottomNavigation, BottomNavigationItem} from 'material-ui/BottomNavigation';
 import Paper from 'material-ui/Paper';
@@ -37,7 +39,10 @@ class BottomNav extends Component {
             <BottomNavigationItem
                 label="Favorites"
                 icon={favoritesIcon}
-                onTouchTap={() => this.select(1)}
+                onTouchTap={() => {
+                  this.select(1)
+                  this.props.dispatch(push('/subscribed'))
+                }}
             />
             <BottomNavigationItem
                 label="Nearby"
@@ -51,4 +56,4 @@ class BottomNav extends Component {
   }
 }
 
-export default BottomNav;
+export default connect()(BottomNav);

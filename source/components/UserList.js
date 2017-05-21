@@ -54,11 +54,9 @@ class UserList extends React.Component {
         )
       return(
         <div>
-          <Subheader>Active friends</Subheader>
           <List>
             {userList}
           </List>
-          <Subheader>Invite friends</Subheader>
         </div>
       )
   }

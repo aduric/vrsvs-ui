@@ -10,8 +10,10 @@ import {
   isEmpty,
   dataToJS
 } from 'react-redux-firebase'
-import ContentClear from 'material-ui/svg-icons/content/clear';
+import Replay from 'material-ui/svg-icons/av/replay';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
+import Record from 'material-ui/svg-icons/av/album';
+import FileUpload from 'material-ui/svg-icons/file/file-upload';
 
 const hasGetUserMedia = !!(navigator.getUserMedia || navigator.webkitGetUserMedia ||
                         navigator.mozGetUserMedia || navigator.msGetUserMedia);
@@ -49,6 +51,7 @@ export default class Recorder extends React.Component {
         };
 
         this.updateUploadedPath = this.updateUploadedPath.bind(this);
+        this.updatePreviewPath = this.updatePreviewPath.bind(this);
         this.discardCurrentVideo = this.discardCurrentVideo.bind(this);
         this.requestUserMedia = this.requestUserMedia.bind(this);
         this.startRecord = this.startRecord.bind(this);
@@ -91,6 +94,10 @@ export default class Recorder extends React.Component {
     this.props.changeVideoPath(path);
   }
 
+  updatePreviewPath(path) {
+    this.props.changePreviewPath(path);
+  }
+
   stopRecord() {
         this.state.recordVideo.stopRecording(() => {
         let params = {
@@ -104,6 +111,7 @@ export default class Recorder extends React.Component {
         this.props.firebase.uploadFile(filePath, params.data, filePath)
             .then(file => {
                 this.setState({ uploadSuccess: true, uploading: false, previewPath: file.File.downloadURL });
+                this.updatePreviewPath(file.File.downloadURL);
                 this.updateUploadedPath(file.key);
             })
             .catch(error => {
@@ -118,8 +126,9 @@ export default class Recorder extends React.Component {
         <div>
           <ReactPlayer url={this.state.previewPath} playing loop width={320} height={200}/>
           <FloatingActionButton
+              mini={true}
               onTouchTap={() => this.discardCurrentVideo()}>
-              <ContentClear />
+              <Replay />
           </FloatingActionButton>
         </div>
       )
@@ -127,9 +136,15 @@ export default class Recorder extends React.Component {
       return(
         <div>
           <div><video src={this.state.src} width="320" height="200" autoPlay></video></div>
+          <FloatingActionButton 
+            mini={true}
+            onTouchTap={this.startRecord}>
+            <Record />
+          </FloatingActionButton>
           {this.state.uploading ?
-            <div>Uploading...</div> : null}
-          <div><button onClick={this.startRecord}>Start Record</button></div>
+            <div><FileUpload/></div> : null}
+          <div>
+        </div>
         </div>
       )
     }
