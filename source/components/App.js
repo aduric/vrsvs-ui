@@ -1,4 +1,5 @@
 import React from 'react'
+import { BrowserRouter as Router, Route, Link, Redirect } from 'react-router-dom'
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import IconMenu from 'material-ui/IconMenu';
@@ -26,9 +27,11 @@ const App = (props) => ({
         <AppBar 
           title={'vrsvs'}
           iconElementLeft={
-            <svg style={{width: "48px", height: "48px"}}>
-              <use xlinkHref='svg/vrsvs_icon.svg#Bear_logo'/>
-            </svg>}>
+              <Link to='/'>
+                <svg style={{width: "48px", height: "48px"}}>
+                  <use xlinkHref='svg/vrsvs_icon.svg#Bear_logo'/>
+                </svg>
+            </Link>}>
           <ToolbarGroup> 
             <Login {...props}/>
           </ToolbarGroup>
