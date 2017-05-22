@@ -72,7 +72,7 @@ export default class AuthService extends EventEmitter {
     return profile ? JSON.parse(localStorage.profile) : {}
   }
 
-  login() {
+  login(setLoginState) {
     // Call the show method to display the widget.
     console.log('in login')
     //this.lock.show();
@@ -91,7 +91,13 @@ export default class AuthService extends EventEmitter {
         console.log(this)
         console.log('profile')
         console.log(profile)
-        this.emit('authenticated', {'idToken': token});
+        console.log('doing auth too2')
+        // Saves the user token
+        console.log(authResult);
+        this.setToken(authResult.idToken)
+        // Async loads the user profile data
+        this.lock.getUserInfo(authResult.accessToken, this.getUserInformation)
+        setLoginState({isLoggedIn: true})
       }
     })
   }
@@ -103,6 +109,7 @@ export default class AuthService extends EventEmitter {
 
   setToken(idToken) {
     // Saves user token to localStorage
+    console.log('setting token')
     localStorage.setItem('id_token', idToken)
   }
 
@@ -127,6 +134,7 @@ export default class AuthService extends EventEmitter {
     localStorage.removeItem('id_token');
     localStorage.removeItem('access_token');
     localStorage.removeItem('profile');
+    this.emit('logged_out')
   }
 }
 

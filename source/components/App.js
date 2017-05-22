@@ -18,11 +18,37 @@ import VisibleNotificationList from '../containers/VisibleNotificationList';
 import PointsBadge from './PointsBadge';
 import RaisedButton from 'material-ui/RaisedButton';
 import SvgIcon from 'material-ui/SvgIcon';
+import Avatar from 'material-ui/Avatar';
+import { connect } from 'react-redux'
+import { push } from 'react-router-redux'
 
+class App extends React.Component {
+  constructor(props, context) {
+    super(props, context)
+    this.state = {
+      profile: props.auth.getProfile(),
+      isLoggedIn: props.auth.loggedIn()
+    }
+    // listen to profile_updated events to update internal state
+    props.auth.on('profile_updated', (newProfile) => {
+      console.log('profile_updated')
+      this.setState({profile: newProfile, isLoggedIn: true})
+    })
+    props.auth.on('logged_out', () => {
+      this.setState({isLoggedIn: false})
+      props.dispatch(push('/'))
+    })
+  }
+  login() {
+    this.props.auth.login()
+  }
 
-const App = (props) => ({
+  logout() {
+    this.props.auth.logout()
+  }
   render() {
-    if(props.auth.loggedIn()) {
+    console.log('app state')
+    console.log(this.state)
       return(
         <AppBar 
           title={'vrsvs'}
@@ -32,10 +58,19 @@ const App = (props) => ({
                   <use xlinkHref='svg/vrsvs_icon.svg#Bear_logo'/>
                 </svg>
             </Link>}>
+          {this.state.isLoggedIn ?
           <ToolbarGroup> 
-            <Login {...props}/>
-          </ToolbarGroup>
-          <ToolbarGroup>
+            <IconMenu
+              iconButtonElement={
+                <IconButton
+                  touch={true}
+                  style={{padding: "0px"}}>
+                  <Avatar src={this.props.auth.getProfile().picture} />
+                </IconButton>
+              }>        
+              <MenuItem href="#" primaryText="Logout" onTouchTap={() => this.logout()} />
+              <MenuItem href="#" primaryText="Delete Account" onTouchTap={() => this.delete()} style={{color: 'red'}}/>
+            </IconMenu>
             <IconMenu
               iconButtonElement={
                 <IconButton touch={true}>
@@ -47,24 +82,14 @@ const App = (props) => ({
               <MenuItem href="challenges" primaryText="Challenges" />
             </IconMenu>
           </ToolbarGroup>
+          : 
+          <ToolbarGroup>
+            <RaisedButton label="Login" onTouchTap={() => this.login()} />
+          </ToolbarGroup>
+          }
         </AppBar>
       );      
-    } else {
-      return(
-        <AppBar title="vrsvs"
-          iconElementLeft={
-              <Link to='/'>
-                <svg style={{width: "48px", height: "48px"}}>
-                  <use xlinkHref='svg/vrsvs_icon.svg#Bear_logo'/>
-                </svg>
-            </Link>}>
-          <ToolbarGroup> 
-            <Login auth={this.props.auth}/>
-          </ToolbarGroup>
-        </AppBar>
-      );
-    }
   }
-})
+}
 
-export default App
+export default connect()(App)
