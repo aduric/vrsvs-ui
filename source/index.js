@@ -21,7 +21,7 @@ import AuthService from './util/AuthService'
 import {persistStore, autoRehydrate} from 'redux-persist'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import lightBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
+import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import * as firebase from "firebase";
 import BottomNav from './components/BottomNav';
 import NotificationList from './components/NotificationList';
@@ -68,7 +68,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
 )
 
 render(
-  <MuiThemeProvider>
+  <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
     <Provider store={store}>
       <ConnectedRouter history={history}>
         <div>

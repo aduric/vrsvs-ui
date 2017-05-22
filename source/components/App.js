@@ -20,13 +20,7 @@ import SvgIcon from 'material-ui/SvgIcon';
 
 
 const App = (props) => ({
-  getChildContext() {
-      return { muiTheme: getMuiTheme(baseTheme) };
-  },
   render() {
-    console.log('rendering app')
-    console.log(this)
-    console.log(props)
     if(props.auth.loggedIn()) {
       return(
         <AppBar 
@@ -63,9 +57,5 @@ const App = (props) => ({
     }
   }
 })
-
-App.childContextTypes = {
-    muiTheme: React.PropTypes.object.isRequired,
-};
 
 export default App
