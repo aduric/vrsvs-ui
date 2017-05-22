@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { addUserFromFBProfile } from '../actions'
+import { addUserFromFBProfile, removeUser } from '../actions'
 import React, { PropTypes as T } from 'react'
 import AuthService from '../util/AuthService'
 import RaisedButton from 'material-ui/RaisedButton';
@@ -32,9 +32,22 @@ export class Login extends React.Component {
     })
   }
 
+  login() {
+    this.props.auth.login(this.setState)
+    this.props.appLogin()
+  }
+
+  logout() {
+    //this.setState({isLoggedIn: false})
+    this.props.auth.logout(this.setState)
+  }
+
+  delete() {
+    this.props.auth.logout();
+    this.props.dispatch(removeUser(this.state.profile.user_id));
+  }
+
   render() {
-    console.log('redering login');
-    console.log(this.props);
     if(this.props.auth.loggedIn()) {
       return (
           <IconMenu
@@ -45,13 +58,14 @@ export class Login extends React.Component {
                 <Avatar src={this.props.auth.getProfile().picture} />
               </IconButton>
             }>        
-            <MenuItem href="#" primaryText="Logout" onClick={this.props.auth.logout.bind(this)} />
+            <MenuItem href="#" primaryText="Logout" onTouchTap={() => this.logout()} />
+            <MenuItem href="#" primaryText="Delete Account" onTouchTap={() => this.delete()} style={{color: 'red'}}/>
           </IconMenu>
       )
     }
     else {
       return (
-        <RaisedButton label="Login" onClick={this.props.auth.login.bind(this)} />
+        <RaisedButton label="Login" onTouchTap={() => this.login()} />
       )
     }
   }

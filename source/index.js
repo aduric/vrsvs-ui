@@ -60,7 +60,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
       <Component {...props}/>
     ) : (
       <Redirect to={{
-        pathname: '/login',
+        pathname: '/',
         state: { from: props.location }
       }}/>
     )
@@ -74,7 +74,7 @@ render(
         <div>
           <Route path="/" component={() => <App auth={auth}/>}/>
           <Route exact path="/" component={() => auth.loggedIn() ? <NotificationList/> : <VerticalNonLinear/>}/>
-          <Route path="/login" component={Login}/>  
+          <Route path="/login" component={() => <div></div>}/>  
           <PrivateRoute path="/users" component={() => <UserList auth={auth}/>}/>
           <PrivateRoute path="/challenges" component={() => <ChallengeList auth={auth}/>}/>
           <PrivateRoute path="/subscribed" component={() => <SubscribedChallengeList auth={auth}/>}/>

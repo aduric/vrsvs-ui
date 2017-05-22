@@ -51,14 +51,18 @@ const App = (props) => ({
       );      
     } else {
       return(
-        <AppBar title="vrsvs">
+        <AppBar title="vrsvs"
+          iconElementLeft={
+              <Link to='/'>
+                <svg style={{width: "48px", height: "48px"}}>
+                  <use xlinkHref='svg/vrsvs_icon.svg#Bear_logo'/>
+                </svg>
+            </Link>}>
           <ToolbarGroup> 
-            <Login auth={props.auth}/>
+            <Login auth={this.props.auth}/>
           </ToolbarGroup>
         </AppBar>
       );
     }
   }
-})
-
-export default App
+}

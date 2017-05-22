@@ -184,6 +184,26 @@ function addOrUpdateUser(user) {
     }    
 }
 
+export function removeUser(userid) {
+    return (dispatch, getState, getFirebase) => {
+        const firebase = getFirebase()
+        const firebasePath = 'users'
+        var userRef = firebase.database().ref('users/' + userid);
+                        var issuerChallengeRef = firebase.database().ref('challenges').orderByChild("issuer").equalTo(userid);
+                var participantChallengeRef = firebase.database().ref('challenges').orderByChild("issuer").equalTo(userid);
+            /*
+        userRef.remove()
+            .then(() => {
+                // remove all challenges
+                var issuerChallengeRef = firebase.database().ref('challenges').orderByChild("issuer").equalTo(userid);
+                var participantChallengeRef = firebase.database().ref('challenges').orderByChild("issuer").equalTo(userid);
+                issuerChallengeRef.remove();
+                participantChallengeRef.remove();
+            })
+            */
+    }    
+}
+
 function sendNotification(notification) {
     return (dispatch, getState, getFirebase) => {
         const firebase = getFirebase()
