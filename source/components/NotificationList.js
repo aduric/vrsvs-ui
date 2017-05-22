@@ -53,9 +53,9 @@ export default class NotificationList extends React.Component {
           />
         )
       return(
-        <div>
+        <List>
           {notificationsList}
-        </div>
+        </List>
       )
   }
 }

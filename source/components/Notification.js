@@ -5,22 +5,19 @@ import {Card, CardActions, CardHeader, CardText, CardMedia, CardTitle} from 'mat
 import Divider from 'material-ui/Divider';
 import ReactPlayer from 'react-player'
 import {grey400, darkBlack, lightBlack} from 'material-ui/styles/colors';
+import {List, ListItem} from 'material-ui/List';
 
 
 const Notification = (props) => ({
   render() {
     const { resource, message, subject, object } = this.props;
     return(
-      <Card>
-        <CardHeader
-          title={eval(message)}
-          avatar={<svg style={{width: "48px", height: "48px"}}>
+      <ListItem
+        primaryText={eval(message)}
+        leftAvatar={<svg style={{width: "48px", height: "48px"}}>
               <use xlinkHref='svg/vrsvs_icon.svg#Bear_logo'/>
             </svg>}
-          actAsExpander={false}
-          showExpandableButton={false}
-        />
-      </Card>
+      />
     )
   }
 });

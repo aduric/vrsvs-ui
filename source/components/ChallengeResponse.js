@@ -13,7 +13,7 @@ const ChallengeResponse = (props) => ({
       <Card>
         <CardHeader
           title={this.props.responder.name}
-          subtitle={this.props.response_vid === 'undefined' ? this.props.response_msg : 'replied...'}
+          subtitle='replied...'
           avatar={this.props.responder.avatar}
           actAsExpander={false}
           showExpandableButton={false}
@@ -23,7 +23,10 @@ const ChallengeResponse = (props) => ({
           overlay={<CardTitle title={this.props.response_msg} />}
         >
           <ReactPlayer url={this.props.response_vid.downloadURL} playing loop/>
-        </CardMedia> : null}
+        </CardMedia> : 
+          <CardText>
+            {this.props.response_msg}
+          </CardText>}
       </Card>
     )
   }

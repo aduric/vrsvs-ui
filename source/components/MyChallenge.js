@@ -27,7 +27,7 @@ const MyChallenge = (props) => ({
           <CardMedia
             expandable={true}>
             <div>
-              <ChallengeResponseForm id={this.props.id} responder={this.props.participant}/>
+              <ChallengeResponseForm id={this.props.id} status={this.props.status} responder={this.props.participant}/>
               <Divider inset={true} />
               <ChallengeResponseList id={this.props.id}/>
             </div>
