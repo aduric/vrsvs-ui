@@ -46,8 +46,6 @@ class User extends React.Component {
     this.setState({open: false});  
   }
   render() {
-    console.log('user props')
-    console.log(this.props)
     return(
       <div>
         <UserChallenge 
@@ -59,9 +57,13 @@ class User extends React.Component {
         <ListItem
           leftAvatar={<Avatar src={this.props.avatar} />}
           rightAvatar={
-            <PointsBadge
-              points={this.props.points == 'undefined' ? 0 : this.props.points}
-              positionstyle={{position: 'absolute', top: '8px', right: '16px', margin: 5, "min-width": "0px"}}/>
+            <Avatar
+              backgroundColor={pink400}
+              size={30}
+              style={style}
+            >
+              {this.props.points == undefined ? 0 : this.props.points}
+            </Avatar>
           }
           primaryText={this.props.name}
           onTouchTap={() => this.handleOpen()}

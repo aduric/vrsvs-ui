@@ -32,14 +32,14 @@ let ChallengeActions = (challenge) => ({
     console.log("IssuerId");
     console.log(challenge.issuer.id);
     this.props.dispatch(acceptChallenge(challenge.id));
-    this.props.dispatch(updatePoints(challenge.issuer, 1));
+    this.props.dispatch(updatePoints(challenge.id, 'issuer', 1, 'accepting'));
   },
   handleReject() {
     this.props.dispatch(rejectChallenge(challenge.id));
   },
   handleComplete() {
     this.props.dispatch(completeChallenge(challenge.id));
-    this.props.dispatch(updatePoints(challenge.participant, 3));
+    this.props.dispatch(updatePoints(challenge.id, 'participant', 3, 'completing'));
   },
   handleFail() {
     this.props.dispatch(failChallenge(challenge.id));

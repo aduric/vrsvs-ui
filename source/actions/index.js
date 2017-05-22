@@ -125,11 +125,32 @@ export function addUserFromFBProfile(profile) {
     })
 }
 
-export const updatePoints = (user, addPoints) => {
-    return addOrUpdateUser(Object.assign(
-        {}, 
-        user, 
-        { points: user.points == 'undefined' ? addPoints : user.points + addPoints }))
+export const updatePoints = (challengeid, userType, addPoints, updateTyping) => {
+    return (dispatch, getState, getFirebase) => {
+        const firebase = getFirebase()
+        const firebasePath = 'challenges/' + challengeid
+        firebase.ref(firebasePath).once('value')
+            .then(snapshot => {
+                var data = snapshot.val()
+                var pointsUpdateUser = userType === 'issuer' ? data.issuer : data.participant
+                var pointsUpdate = data.points == 'undefined' ? addPoints : data.points + addPoints
+                firebase.update('users/'+pointsUpdateUser, {
+                    points: pointsUpdate
+                })
+                    .then(() => {
+                        var notification_msg = "'You have earned " + pointsUpdate + " points for " + updateTyping + "' + resource.description'"
+                        var notification = {
+                            "message" : notification_msg,
+                            "object" : pointsUpdateUser,
+                            "resource" : "challenges/" + challengeid,
+                            "status" : "unseen",
+                            "subject" : pointsUpdateUser,
+                            "timestamp" : Date.now()
+                        };
+                        dispatch(sendNotification(notification))
+                    })
+            })
+    }  
 }
 
 function addOrUpdateUser(user) {

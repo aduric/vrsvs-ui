@@ -72,7 +72,7 @@ render(
     <Provider store={store}>
       <ConnectedRouter history={history}>
         <div>
-          <Route path="/" component={() => <App auth={auth} fbase={fbase}/>}/>
+          <Route path="/" component={() => <App auth={auth}/>}/>
           <Route exact path="/" component={() => auth.loggedIn() ? <NotificationList/> : <VerticalNonLinear/>}/>
           <Route path="/login" component={Login}/>  
           <PrivateRoute path="/users" component={() => <UserList auth={auth}/>}/>
