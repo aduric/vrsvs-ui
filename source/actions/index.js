@@ -220,17 +220,6 @@ export function removeUser(userid) {
                 })
             });
         firebase.remove(removePath)
-        
-            /*
-        userRef.remove()
-            .then(() => {
-                // remove all challenges
-                var issuerChallengeRef = firebase.database().ref('challenges').orderByChild("issuer").equalTo(userid);
-                var participantChallengeRef = firebase.database().ref('challenges').orderByChild("issuer").equalTo(userid);
-                issuerChallengeRef.remove();
-                participantChallengeRef.remove();
-            })
-            */
     }    
 }
 
