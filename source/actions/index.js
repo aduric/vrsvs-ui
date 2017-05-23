@@ -137,7 +137,7 @@ export const updatePoints = (challengeid, userType, newPoints, updateTyping) => 
                     points: newPoints
                 })
                     .then(() => {
-                        var notification_msg = "'You have earned " + pointsUpdate + " points for " + updateTyping + "' + resource.description'"
+                        var notification_msg = "'You have earned " + pointsUpdate + " points for " + updateTyping + " ' + resource.description"
                         var notification = {
                             "message" : notification_msg,
                             "object" : pointsUpdateUser,
