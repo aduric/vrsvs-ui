@@ -133,8 +133,8 @@ export const updatePoints = (challengeid, userType, addPoints, updateTyping) => 
             .then(snapshot => {
                 var data = snapshot.val()
                 var pointsUpdateUser = userType === 'issuer' ? data.issuer : data.participant
-                var pointsUpdate = data.points == 'undefined' ? addPoints : data.points + addPoints
-                firebase.update('users/'+pointsUpdateUser, {
+                var pointsUpdate = data.points == undefined ? addPoints : data.points + addPoints
+                firebase.update('users/' + pointsUpdateUser, {
                     points: pointsUpdate
                 })
                     .then(() => {
@@ -197,14 +197,31 @@ function addUserToFriends(friend, user) {
     } 
 }
 
+// TODO REMOVE USER FROM FB APP
 export function removeUser(userid) {
     return (dispatch, getState, getFirebase) => {
         const firebase = getFirebase()
         const firebasePath = 'users'
-        var userRef = firebase.database().ref('users/' + userid);
-                        var issuerChallengeRef = firebase.database().ref('challenges').orderByChild("issuer").equalTo(userid);
-                var participantChallengeRef = firebase.database().ref('challenges').orderByChild("issuer").equalTo(userid);
-                // TODO REMOVE USER FROM FB APP
+        var removePath = 'users/' + userid
+        var userRef = firebase.database().ref(removePath);
+        var issuerChallengeRef = firebase.database().ref('challenges').orderByChild("issuer").equalTo(userid);
+        var participantChallengeRef = firebase.database().ref('challenges').orderByChild("issuer").equalTo(userid);
+        issuerChallengeRef.once('value')
+            .then(function(dataSnapshot) {
+                dataSnapshot.forEach(c => {
+                    var removePath = 'challenges/' + c.key 
+                    firebase.remove(removePath)
+                })
+            });
+        participantChallengeRef.once('value')
+            .then(function(dataSnapshot) {
+                dataSnapshot.forEach(c => {
+                    var removePath = 'challenges/' + c.key 
+                    firebase.remove(removePath)
+                })
+            });
+        firebase.remove(removePath)
+        
             /*
         userRef.remove()
             .then(() => {

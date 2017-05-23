@@ -1,5 +1,6 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Link, Redirect } from 'react-router-dom'
+import { addUserFromFBProfile, removeUser } from '../actions'
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import IconMenu from 'material-ui/IconMenu';
@@ -46,6 +47,10 @@ class App extends React.Component {
 
   logout() {
     this.props.auth.logout()
+  }
+  delete() {
+    this.props.auth.logout();
+    this.props.dispatch(removeUser(this.state.profile.user_id));
   }
   render() {
     console.log('app state')
