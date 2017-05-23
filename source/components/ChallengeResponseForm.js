@@ -13,6 +13,10 @@ import VideoAdd from 'material-ui/svg-icons/av/videocam';
 import ReactPlayer from 'react-player'
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
 
+const style = {
+  margin: 18,
+};
+
 class ChallengeResponseForm extends React.Component {
 
   constructor(props) {
@@ -112,18 +116,19 @@ class ChallengeResponseForm extends React.Component {
           <ReactPlayer url={this.state.response_vid_preview} playing loop width={320} height={200}/>: null}
         <Toolbar>
           <ToolbarGroup firstChild={true}>
+            <TextField
+              defaultValue={this.state.response_msg}
+              hintText="Respond Here..."
+              onChange={this.handleTextChange}
+              style={style}
+              />
+          </ToolbarGroup>
+          <ToolbarGroup>
             <FloatingActionButton 
               mini={true}
               onTouchTap={this.handleVidOpen}>
               <VideoAdd />
             </FloatingActionButton>
-          </ToolbarGroup>
-          <ToolbarGroup>
-            <TextField
-              defaultValue={this.state.response_msg}
-              hintText="Respond Here..."
-              onChange={this.handleTextChange}
-              />
           </ToolbarGroup>
           <ToolbarGroup>
             <FloatingActionButton 

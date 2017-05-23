@@ -17,10 +17,10 @@ export const addUpdateChallengeResponse = (challengeid, id, responderid, respons
             .then(() => {
                     var notification = {
                         "message" : "object.name + ' replied in ' + resource.description",
-                        "object" : challenge.issuer_id,
-                        "resource" : "challenges/" + challenge.id,
+                        "object" : responderid,
+                        "resource" : "challenges/" + challengeid,
                         "status" : "unseen",
-                        "subject" : challenge.participant_id,
+                        "subject" : responderid,
                         "timestamp" : Date.now()
                     };
                     dispatch(sendNotification(notification))
