@@ -17,7 +17,9 @@ class Lock extends React.Component {
 
     return (
       <Paper zDepth={1}>
-        <img src="https://cdn.auth0.com/styleguide/1.0.0/img/badge.svg" />
+            <svg style={{width: "48px", height: "48px"}}>
+              <use xlinkHref='svg/vrsvs_icon.svg#Bear_logo'/>
+            </svg>
         {children}
       </Paper>
     )

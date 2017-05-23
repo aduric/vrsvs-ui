@@ -73,11 +73,4 @@ class User extends React.Component {
   }
 }
 
-User.propTypes = {
-  id: PropTypes.string.isRequired, 
-  name: PropTypes.string.isRequired,
-  points: PropTypes.number.isRequired,
-  meid: PropTypes.string.isRequired,
-}
-
 export default User

@@ -7,7 +7,17 @@ export default class AuthService extends EventEmitter {
   constructor(clientId, key, domain) {
     super();
     // Configure Auth0
-    this.lock = new Auth0Lock(clientId, domain, {});
+    var options = {
+      languageDictionary: {
+        signUpTerms: "I agree to the <a href='/terms' target='_new'>terms of service</a> and <a href='/privacy' target='_new'>privacy policy</a>.",
+        title: "vrsvs",
+      },
+      theme: {
+        logo: "svg/vrsvs_icon.svg#Bear_logo",
+        primaryColor: "green",
+      }      
+    }
+    this.lock = new Auth0Lock(clientId, domain, options);
     this.management = new ManagementClient({
       token: key,
       domain: domain
@@ -19,7 +29,6 @@ export default class AuthService extends EventEmitter {
     // binds login functions to keep this context
     this.login = this.login.bind(this);
     this.getUserInformation = this.getUserInformation.bind(this);
-    this.getFacebookAccessToken = this.getFacebookAccessToken.bind(this);
     this.setProfile = this.setProfile.bind(this);
     this.setToken = this.setToken.bind(this);
     this.setAccessToken = this.setAccessToken.bind(this);
@@ -41,17 +50,6 @@ export default class AuthService extends EventEmitter {
         console.log('getting profile')
         console.log(profile)
         this.setProfile(profile)
-        //this.management.getUser({ id: profile.user_id }, this.getFacebookAccessToken)
-      }
-  }
-
-  getFacebookAccessToken(err, user) {
-      if (err) {
-          console.log('error in auth0mgmt', err)
-          this.setAccessToken('')
-      }
-      else {
-        this.setAccessToken(user.identities[0].access_token)
       }
   }
 
@@ -82,16 +80,8 @@ export default class AuthService extends EventEmitter {
       popup: true,
     }, function (err, profile, token) {
       if (err) {
-        //this.emit('authorization_error');
         console.log('Error loading the Profile', err)
       } else {
-        //this.setToken = this.setToken.bind(this);
-        //this.setToken(token);
-        console.log('emitting this')
-        console.log(this)
-        console.log('profile')
-        console.log(profile)
-        console.log('doing auth too2')
         // Saves the user token
         console.log(authResult);
         this.setToken(authResult.idToken)

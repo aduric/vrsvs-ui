@@ -21,7 +21,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import SvgIcon from 'material-ui/SvgIcon';
 import Avatar from 'material-ui/Avatar';
 import { connect } from 'react-redux'
-import { push } from 'react-router-redux'
+import { push, replace } from 'react-router-redux'
 
 class App extends React.Component {
   constructor(props, context) {
@@ -53,8 +53,6 @@ class App extends React.Component {
     this.props.dispatch(removeUser(this.state.profile.user_id));
   }
   render() {
-    console.log('app state')
-    console.log(this.state)
       return(
         <AppBar 
           title={'vrsvs'}

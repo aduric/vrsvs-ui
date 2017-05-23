@@ -20,30 +20,42 @@ const iconStyles = {
   marginLeft: 12,
 };
 
-let ChallengeActions = (challenge) => ({
+class ChallengeActions extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      status: props.status
+    }
+  }
   isIssued() {
-    return challenge.status === "ISSUED"
-  },
+    return this.state.status === "ISSUED"
+  }
   isAccepted() {
-    return challenge.status === "ACCEPTED"
-  },
+    return this.state.status === "ACCEPTED"
+  }
   handleAccept() {
-    console.log(challenge.id);
+    console.log(this.props.id);
     console.log("IssuerId");
-    console.log(challenge.issuer.id);
-    this.props.dispatch(acceptChallenge(challenge.id));
-    this.props.dispatch(updatePoints(challenge.id, 'issuer', 1, 'accepting'));
-  },
+    console.log(this.props.issuer.id);
+    this.props.dispatch(acceptChallenge(this.props.id));
+    var newPoints = this.props.issuer.points == undefined ? 1 : this.props.issuer.points + 1
+    this.props.dispatch(updatePoints(this.props.id, 'issuer', newPoints, 'accepting'));
+    this.setState({status: 'ACCEPTED'})
+  }
   handleReject() {
-    this.props.dispatch(rejectChallenge(challenge.id));
-  },
+    this.props.dispatch(rejectChallenge(this.props.id));
+    this.setState({status: 'REJECTED'})
+  }
   handleComplete() {
-    this.props.dispatch(completeChallenge(challenge.id));
-    this.props.dispatch(updatePoints(challenge.id, 'participant', 3, 'completing'));
-  },
+    this.props.dispatch(completeChallenge(this.props.id));
+    var newPoints = this.props.participant.points == undefined ? 3 : this.props.participant.points + 3
+    this.props.dispatch(updatePoints(this.props.id, 'participant', newPoints, 'completing'));
+    this.setState({status: 'COMPLETED'})
+  }
   handleFail() {
-    this.props.dispatch(failChallenge(challenge.id));
-  },
+    this.props.dispatch(failChallenge(this.props.id));
+    this.setState({status: 'FAILED'})
+  }
   issuedActions() {
     return(
     <CardActions>
@@ -51,7 +63,7 @@ let ChallengeActions = (challenge) => ({
       <RaisedButton label="Reject" secondary={true} style={style} onTouchTap={this.handleReject.bind(this)} />
     </CardActions>
     )    
-  },
+  }
   acceptedActions() {
     return(
     <CardActions>
@@ -59,9 +71,9 @@ let ChallengeActions = (challenge) => ({
       <RaisedButton label="Fail" secondary={true} style={style} onTouchTap={this.handleFail.bind(this)} />
     </CardActions>
     )      
-  },
+  }
   completedActions() {
-    if(challenge.status === 'COMPLETED') {
+    if(this.state.status === 'COMPLETED') {
       return(
         <Check style={iconStyles} color={green500}/>
       )
@@ -70,7 +82,7 @@ let ChallengeActions = (challenge) => ({
         <Close style={iconStyles} color={red500}/>
       )
     }     
-  },
+  }
   render() {
     if(this.isIssued()) {
       return this.issuedActions();
@@ -80,6 +92,6 @@ let ChallengeActions = (challenge) => ({
       return this.completedActions();     
     }
   }
-})
+}
 
 export default connect()(ChallengeActions);

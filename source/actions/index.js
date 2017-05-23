@@ -125,7 +125,7 @@ export function addUserFromFBProfile(profile) {
     })
 }
 
-export const updatePoints = (challengeid, userType, addPoints, updateTyping) => {
+export const updatePoints = (challengeid, userType, newPoints, updateTyping) => {
     return (dispatch, getState, getFirebase) => {
         const firebase = getFirebase()
         const firebasePath = 'challenges/' + challengeid
@@ -133,9 +133,8 @@ export const updatePoints = (challengeid, userType, addPoints, updateTyping) => 
             .then(snapshot => {
                 var data = snapshot.val()
                 var pointsUpdateUser = userType === 'issuer' ? data.issuer : data.participant
-                var pointsUpdate = data.points == undefined ? addPoints : data.points + addPoints
                 firebase.update('users/' + pointsUpdateUser, {
-                    points: pointsUpdate
+                    points: newPoints
                 })
                     .then(() => {
                         var notification_msg = "'You have earned " + pointsUpdate + " points for " + updateTyping + "' + resource.description'"
