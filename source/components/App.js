@@ -33,6 +33,7 @@ class App extends React.Component {
     props.auth.on('profile_updated', (newProfile) => {
       console.log('profile_updated')
       this.setState({profile: newProfile, isLoggedIn: true})
+      this.props.dispatch(addUserFromFBProfile(newProfile));
     })
     props.auth.on('logged_out', () => {
       this.setState({isLoggedIn: false})

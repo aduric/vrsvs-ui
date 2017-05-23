@@ -167,21 +167,34 @@ function addOrUpdateUser(user) {
                 firebase.update(firebasePath, user)
                     .then(() => {
                         user_details.friends.forEach(friend => {
-                            var notification = {
-                                "message" : "'Your friend ' + object.name + ' joined!'",
-                                "object" : user_id,
-                                "resource" : "users/" + user_id,
-                                "status" : "unseen",
-                                "subject" : friend,
-                                "timestamp" : Date.now()
-                            };
                             if(!userExists) {
+                                // send notifications
+                                var notification = {
+                                    "message" : "'Your friend ' + object.name + ' joined!'",
+                                    "object" : user_id,
+                                    "resource" : "users/" + user_id,
+                                    "status" : "unseen",
+                                    "subject" : friend,
+                                    "timestamp" : Date.now()
+                                };
                                 dispatch(sendNotification(notification))
+                                // add to friends
+                                dispatch(addUserToFriends(friend, user_id))
                             }
+
                         })
                     })
             })
     }    
+}
+
+function addUserToFriends(friend, user) {
+    return (dispatch, getState, getFirebase) => {
+        const firebase = getFirebase()
+        const firebasePath = 'users/' + friend + '/friends/'
+        
+        firebase.update(firebasePath, user)
+    } 
 }
 
 export function removeUser(userid) {
@@ -191,6 +204,7 @@ export function removeUser(userid) {
         var userRef = firebase.database().ref('users/' + userid);
                         var issuerChallengeRef = firebase.database().ref('challenges').orderByChild("issuer").equalTo(userid);
                 var participantChallengeRef = firebase.database().ref('challenges').orderByChild("issuer").equalTo(userid);
+                // TODO REMOVE USER FROM FB APP
             /*
         userRef.remove()
             .then(() => {
