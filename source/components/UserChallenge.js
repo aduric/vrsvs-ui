@@ -72,8 +72,6 @@ class UserChallenge extends React.Component {
         >
         <TextField
           hintText="Challenge Description"
-          multiLine={true}
-          rows={2}
           value={this.state.description}
           onChange={this.handleTextChange}
           />          
