@@ -10,10 +10,13 @@ import {List, ListItem} from 'material-ui/List';
 
 const Notification = (props) => ({
   render() {
-    const { resource, message, subject, object } = this.props;
+    const { resource, message, subject, object, timestamp } = this.props;
+    const d = new Date(timestamp);
+    d.
     return(
       <ListItem
         primaryText={eval(message)}
+        secondaryText={`${d.getDate()}/${(d.getMonth()+1)}/${d.getFullYear()}`}
         leftAvatar={<svg style={{width: "48px", height: "48px"}}>
               <use xlinkHref='svg/vrsvs_icon.svg#Bear_logo'/>
             </svg>}
