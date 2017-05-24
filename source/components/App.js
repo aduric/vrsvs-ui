@@ -17,11 +17,19 @@ import Badge from 'material-ui/Badge';
 import NotificationsIcon from 'material-ui/svg-icons/social/notifications';
 import VisibleNotificationList from '../containers/VisibleNotificationList';
 import PointsBadge from './PointsBadge';
+import HomeIcon from './HomeIcon';
 import RaisedButton from 'material-ui/RaisedButton';
 import SvgIcon from 'material-ui/SvgIcon';
 import Avatar from 'material-ui/Avatar';
 import { connect } from 'react-redux'
 import { push, replace } from 'react-router-redux'
+
+const iconStyles = {
+  fill:'#E91E63',
+  height: '48px',
+  width: '48px'
+};
+
 
 class App extends React.Component {
   constructor(props, context) {
@@ -57,11 +65,10 @@ class App extends React.Component {
         <AppBar 
           title={'vrsvs'}
           iconElementLeft={
-              <Link to='/'>
-                <svg style={{width: "48px", height: "48px"}}>
-                  <use xlinkHref='svg/vrsvs_icon.svg#Bear_logo'/>
-                </svg>
-            </Link>}>
+            <Link to='/'>
+              <HomeIcon style={iconStyles} id="Bear_logo" x="0px" y="0px" viewBox="0 0 450 450"/>
+            </Link>
+            }>
           {this.state.isLoggedIn ?
           <ToolbarGroup> 
             <IconMenu
