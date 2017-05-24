@@ -113,31 +113,22 @@ class ChallengeResponseForm extends React.Component {
           <Recorder changePreviewPath={path => this.handleVideoPreview(path)} changeVideoPath={path => this.handleVideoChange(path)}/>
         </Dialog>
         {this.state.response_vid !== 'sentinel' && !this.state.video_open ? 
-          <ReactPlayer url={this.state.response_vid_preview} playing loop width={320} height={200}/>: null}
-        <Toolbar>
-          <ToolbarGroup firstChild={true}>
+          <ReactPlayer url={this.state.response_vid_preview} controls playing loop mute playsinline width={320} height={200}/>: null}
             <TextField
               defaultValue={this.state.response_msg}
               hintText="Respond Here..."
               onChange={this.handleTextChange}
-              style={style}
               />
-          </ToolbarGroup>
-          <ToolbarGroup>
             <FloatingActionButton 
               mini={true}
               onTouchTap={this.handleVidOpen}>
               <VideoAdd />
             </FloatingActionButton>
-          </ToolbarGroup>
-          <ToolbarGroup>
             <FloatingActionButton 
               mini={true}
               onTouchTap={this.handleSubmit}>
               <ContentAdd />
             </FloatingActionButton>
-          </ToolbarGroup>
-        </Toolbar>
       </div>
     )
   }

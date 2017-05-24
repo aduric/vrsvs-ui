@@ -19,14 +19,12 @@ const ChallengeResponse = (props) => ({
           showExpandableButton={false}
         />
         {this.props.response_vid !== 'undefined' ?
-        <CardMedia
-          overlay={<CardTitle title={this.props.response_msg} />}
-        >
-          <ReactPlayer url={this.props.response_vid.downloadURL} playing loop/>
-        </CardMedia> : 
+        <CardMedia>
+          <ReactPlayer url={this.props.response_vid.downloadURL} controls playing loop mute playsinline />
+        </CardMedia> : null}
           <CardText>
             {this.props.response_msg}
-          </CardText>}
+          </CardText>
       </Card>
     )
   }

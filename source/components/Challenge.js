@@ -25,14 +25,11 @@ const Challenge = (props) => ({
             actAsExpander={true}
             showExpandableButton={true}
           />
-          <CardMedia
-            expandable={true}>
-            <div>
+          <CardActions expandable={true}>
               <ChallengeResponseForm id={this.props.id} responder={this.props.participant}/>
               <Divider inset={true} />
               <ChallengeResponseList id={this.props.id}/>
-            </div>
-          </CardMedia>
+          </CardActions>
           <ChallengeActions {...this.props}/>
         </Card>
       </div>

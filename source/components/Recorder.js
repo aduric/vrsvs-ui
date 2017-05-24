@@ -124,7 +124,7 @@ export default class Recorder extends React.Component {
     if(this.state.uploadSuccess) {
       return(
         <div>
-          <ReactPlayer url={this.state.previewPath} playing loop width={320} height={200}/>
+          <ReactPlayer url={this.state.previewPath} controls playing loop mute playsinline width={320} height={200}/>
           <FloatingActionButton
               mini={true}
               onTouchTap={() => this.discardCurrentVideo()}>
