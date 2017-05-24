@@ -14,6 +14,7 @@ import Replay from 'material-ui/svg-icons/av/replay';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import Record from 'material-ui/svg-icons/av/album';
 import FileUpload from 'material-ui/svg-icons/file/file-upload';
+import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
 
 const hasGetUserMedia = !!(navigator.getUserMedia || navigator.webkitGetUserMedia ||
                         navigator.mozGetUserMedia || navigator.msGetUserMedia);
@@ -124,25 +125,41 @@ export default class Recorder extends React.Component {
     if(this.state.uploadSuccess) {
       return(
         <div>
-          <ReactPlayer url={this.state.previewPath} controls playing loop mute playsinline width={320} height={200}/>
-          <FloatingActionButton
-              mini={true}
-              onTouchTap={() => this.discardCurrentVideo()}>
-              <Replay />
-          </FloatingActionButton>
+          <ReactPlayer url={this.state.previewPath} controls playing loop muted playsinline width={320} height={200}/>
+        <Toolbar>
+          <ToolbarGroup 
+            firstChild={true}
+            style={{
+              margin: '0 auto',
+            }}>
+            <FloatingActionButton
+                mini={true}
+                onTouchTap={() => this.discardCurrentVideo()}>
+                <Replay />
+            </FloatingActionButton>
+            </ToolbarGroup>
+          </Toolbar>
         </div>
       )
     } else {
       return(
         <div>
           <div><video src={this.state.src} width="320" height="200" autoPlay></video></div>
-          <FloatingActionButton 
-            mini={true}
-            onTouchTap={this.startRecord}>
-            <Record />
-          </FloatingActionButton>
+          <Toolbar>
+          <ToolbarGroup
+            firstChild={true}
+            style={{
+              margin: '0 auto',
+            }}>
+            <FloatingActionButton 
+              mini={true}
+              onTouchTap={this.startRecord}>
+              <Record />
+            </FloatingActionButton>
+            </ToolbarGroup>
+          </Toolbar>
           {this.state.uploading ?
-            <div><FileUpload/></div> : null}
+            <div>Uploading...</div> : null}
           <div>
         </div>
         </div>

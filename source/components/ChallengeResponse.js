@@ -20,7 +20,7 @@ const ChallengeResponse = (props) => ({
         />
         {this.props.response_vid !== 'undefined' ?
         <CardMedia>
-          <ReactPlayer url={this.props.response_vid.downloadURL} controls playing loop mute playsinline />
+          <ReactPlayer url={this.props.response_vid.downloadURL} controls playing loop muted playsinline />
         </CardMedia> : null}
           <CardText>
             {this.props.response_msg}
