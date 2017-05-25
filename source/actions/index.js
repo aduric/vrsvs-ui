@@ -201,7 +201,7 @@ function addUserToFriends(friend, user) {
                         friends: [user]
                     }
                 }        
-                firebase.update(firebasePath, user)
+                firebase.update(firebasePath, [user])
             })
     } 
 }
