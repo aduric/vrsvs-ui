@@ -12,7 +12,6 @@ import ContentAdd from 'material-ui/svg-icons/content/add';
 import VideoAdd from 'material-ui/svg-icons/av/videocam';
 import ReactPlayer from 'react-player'
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
-import MyEmojiInput from './MyEmojiInput'
 
 const style = {
   margin: 18,
