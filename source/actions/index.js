@@ -190,9 +190,19 @@ function addOrUpdateUser(user) {
 function addUserToFriends(friend, user) {
     return (dispatch, getState, getFirebase) => {
         const firebase = getFirebase()
-        const firebasePath = 'users/' + friend + '/friends/'
+        const firebasePath = 'users/' + friend
         
-        firebase.update(firebasePath, user)
+        firebase.ref(firebasePath).once('value')
+            .then(snapshot => {
+                return snapshot.hasChild('friends')})
+            .then(friendsExists => {
+                if(!friendsExists) {
+                    user = {
+                        friends: [user]
+                    }
+                }        
+                firebase.update(firebasePath, user)
+            })
     } 
 }
 
