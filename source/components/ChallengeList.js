@@ -42,7 +42,7 @@ class ChallengeList extends React.Component {
     const challengeList = !isLoaded(challenges)
       ? 'Loading'
       : isEmpty(challenges)
-        ? <p style={{"padding-left": "16px"}}>You have no active challenges</p>
+        ? <Subheader style={{'font-family': 'Roboto'}}>You have no active challenges</Subheader>
         : _.map(challenges, (v, k) =>
           <Challenge
             key={k}

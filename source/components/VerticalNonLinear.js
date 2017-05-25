@@ -8,7 +8,7 @@ import {
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import Sharing from './Sharing';
-
+import Subheader from 'material-ui/Subheader';
 
 /**
  * A basic vertical non-linear implementation
@@ -71,7 +71,7 @@ class VerticalNonLinear extends React.Component {
               Find friends
             </StepButton>
             <StepContent>
-                <p>Add your Facebook friends and create unique challenges for them</p>
+                <p style={{'font-family': 'Roboto'}}>Add your Facebook friends and create unique challenges for them</p>
                 <Sharing/>
               {this.renderStepActions(0)}
             </StepContent>
@@ -81,7 +81,7 @@ class VerticalNonLinear extends React.Component {
               Complete challenges for points
             </StepButton>
             <StepContent>
-              <p>
+              <p style={{'font-family': 'Roboto'}}>
                 Do challenges that your friends create for you and track your
                 progress. For each challenge that you complete, you get points!
               </p>
@@ -93,7 +93,7 @@ class VerticalNonLinear extends React.Component {
               Challenge yourself
             </StepButton>
             <StepContent>
-              <p>
+              <p style={{'font-family': 'Roboto'}}>
                 Getting things accomplished is easier with your friends watching
                 and cheering on your progress. Challenging yourself is easy!
               </p>

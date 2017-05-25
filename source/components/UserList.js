@@ -41,7 +41,7 @@ class UserList extends React.Component {
       ? 'Loading'
       : isEmpty(users)
         ? <div>
-            <p style={{"padding-left": "16px"}}>There are no active friends. Invite some!</p>
+            <Subheader style={{'font-family': 'Roboto'}}>There are no active friends. Invite some!</Subheader>
             <Sharing/>
           </div>
         : _.map(users, (v, k) =>
