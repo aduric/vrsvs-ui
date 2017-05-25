@@ -6,6 +6,7 @@ import AddUser from '../containers/AddUser'
 import User from './User'
 import FacebookUserList from './FacebookUserList'
 import { connect } from 'react-redux'
+import Sharing from './Sharing';
 import {
   firebaseConnect,
   isLoaded,
@@ -36,12 +37,13 @@ class UserList extends React.Component {
   }
   render() {
     const { firebase, users } = this.props;
-    console.log('redering userlist')
-    console.log(this.props)
     const userList = !isLoaded(users)
       ? 'Loading'
       : isEmpty(users)
-        ? <p style={{"padding-left": "16px"}}>There are no active friends. Invite some!</p>
+        ? <div>
+            <p style={{"padding-left": "16px"}}>There are no active friends. Invite some!</p>
+            <Sharing/>
+          </div>
         : _.map(users, (v, k) =>
           <div>
             <User

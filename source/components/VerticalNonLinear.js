@@ -7,6 +7,8 @@ import {
 } from 'material-ui/Stepper';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
+import Sharing from './Sharing';
+
 
 /**
  * A basic vertical non-linear implementation
@@ -70,6 +72,7 @@ class VerticalNonLinear extends React.Component {
             </StepButton>
             <StepContent>
                 <p>Add your Facebook friends and create unique challenges for them</p>
+                <Sharing/>
               {this.renderStepActions(0)}
             </StepContent>
           </Step>
