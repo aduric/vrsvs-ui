@@ -5,6 +5,7 @@ import {Card, CardActions, CardHeader, CardText, CardMedia, CardTitle} from 'mat
 import Divider from 'material-ui/Divider';
 import ReactPlayer from 'react-player'
 import {grey400, darkBlack, lightBlack} from 'material-ui/styles/colors';
+import ReactEmoji from 'react-emoji';
 
 
 const ChallengeResponse = (props) => ({
@@ -23,7 +24,7 @@ const ChallengeResponse = (props) => ({
           <ReactPlayer url={this.props.response_vid.downloadURL} controls playing loop muted playsinline />
         </CardMedia> : null}
           <CardText>
-            {this.props.response_msg}
+            {ReactEmoji.emojify(this.props.response_msg)}
           </CardText>
       </Card>
     )
