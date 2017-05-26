@@ -1,0 +1,18 @@
+{
+      "e1" : {
+        "name" : "Cool event",
+        "password" : "foo",
+        "participants" : [
+            "facebook|105016450089596",
+            "facebook|102818030280913"
+        ]
+    },
+      "e2" : {
+        "name" : "Toronto Pro Show",
+        "password" : "foo",
+        "participants" : [
+            "facebook|10154465429806996",
+            "facebook|109613809597364"
+        ]
+    }
+}
