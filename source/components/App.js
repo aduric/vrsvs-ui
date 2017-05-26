@@ -90,7 +90,8 @@ class App extends React.Component {
               }
             >        
               <MenuItem href="users" primaryText="Users" />
-              <MenuItem href="challenges" primaryText="Challenges" />
+              <MenuItem href="challenges" primaryText="My Challenges" />
+              <MenuItem href="subscribed" primaryText="Created Challenges" />
             </IconMenu>
           </ToolbarGroup>
           : 

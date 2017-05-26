@@ -78,7 +78,6 @@ render(
           <PrivateRoute path="/users" component={() => <UserList auth={auth}/>}/>
           <PrivateRoute path="/challenges" component={() => <ChallengeList auth={auth}/>}/>
           <PrivateRoute path="/subscribed" component={() => <SubscribedChallengeList auth={auth}/>}/>
-          <Route path="/" component={() => <BottomNav/>}/>
         </div>
       </ConnectedRouter>
     </Provider>
