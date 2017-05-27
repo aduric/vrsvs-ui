@@ -1,10 +1,11 @@
 import React, { PropTypes } from 'react'
 import {List, ListItem} from 'material-ui/List';
 import MyChallenge from './MyChallenge'
-import { fetchChallengesIfNeeded } from '../actions'
+import { removeChallenge } from '../actions'
 import Subheader from 'material-ui/Subheader';
 import Divider from 'material-ui/Divider';
 import { connect } from 'react-redux'
+import LinearProgress from 'material-ui/LinearProgress';
 import {
   firebaseConnect,
   isLoaded,
@@ -35,16 +36,20 @@ class SubscribedChallengeList extends React.Component {
     challenges: PropTypes.object,
     firebase: PropTypes.object
   }
+  deleteChallenge(cid) {
+    this.props.dispatch(removeChallenge(cid));
+  }
   render() {
     const { firebase, challenges } = this.props;
     console.log('rendering challenges');
     console.log(this.props)
     const challengeList = !isLoaded(challenges)
-      ? 'Loading'
+      ? <LinearProgress mode="indeterminate" />
       : isEmpty(challenges)
         ? <Subheader style={{'font-family': 'Roboto'}}>You have no active challenges. Challenge your friends!</Subheader>
         : _.map(challenges, (v, k) =>
           <MyChallenge
+            deleteChallenge={() => this.deleteChallenge(k)}
             key={k}
             id={k}
             {...v}

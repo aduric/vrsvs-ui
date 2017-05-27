@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import ChallengeResponseList from './ChallengeResponseList'
 import ChallengeResponseForm from './ChallengeResponseForm'
 import { acceptChallenge, rejectChallenge, completeChallenge, failChallenge, updatePoints } from '../actions'
-import {Card, CardActions, CardHeader, CardText, CardMedia} from 'material-ui/Card';
+import {Card, CardActions, CardHeader, CardText, CardMedia, CardTitle } from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import Avatar from 'material-ui/Avatar';
 import Divider from 'material-ui/Divider';
@@ -32,6 +32,9 @@ const MyChallenge = (props) => ({
               <ChallengeResponseList id={this.props.id}/>
             </div>
           </CardMedia>
+          <CardActions>
+            <RaisedButton label="Delete" secondary={true} style={style} onTouchTap={() => this.props.deleteChallenge()} />
+          </CardActions>
         </Card>
       </div>
     )

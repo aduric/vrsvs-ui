@@ -7,6 +7,7 @@ import User from './User'
 import FacebookUserList from './FacebookUserList'
 import { connect } from 'react-redux'
 import Sharing from './Sharing';
+import LinearProgress from 'material-ui/LinearProgress';
 import {
   firebaseConnect,
   isLoaded,
@@ -38,7 +39,7 @@ class UserList extends React.Component {
   render() {
     const { firebase, users } = this.props;
     const userList = !isLoaded(users)
-      ? 'Loading'
+      ? <LinearProgress mode="indeterminate" />
       : isEmpty(users)
         ? <div>
             <Subheader style={{'font-family': 'Roboto'}}>There are no active friends. Invite some!</Subheader>

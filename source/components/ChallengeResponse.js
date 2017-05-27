@@ -6,18 +6,20 @@ import Divider from 'material-ui/Divider';
 import ReactPlayer from 'react-player'
 import {grey400, darkBlack, lightBlack} from 'material-ui/styles/colors';
 import ReactEmoji from 'react-emoji';
+import NavigationClose from 'material-ui/svg-icons/navigation/close';
 
 
 const ChallengeResponse = (props) => ({
   render() {
     return(
-      <Card>
+      <Card onExpandChange={() => this.props.handleDelete()}>
         <CardHeader
           title={this.props.responder.name}
           subtitle='replied...'
           avatar={this.props.responder.avatar}
-          actAsExpander={false}
-          showExpandableButton={false}
+          showExpandableButton={true}
+          openIcon={<NavigationClose/>}
+          closeIcon={<NavigationClose/>}
         />
         {this.props.response_vid !== 'undefined' ?
         <CardMedia>

@@ -5,6 +5,7 @@ import { fetchChallengesIfNeeded } from '../actions'
 import Subheader from 'material-ui/Subheader';
 import Divider from 'material-ui/Divider';
 import { connect } from 'react-redux'
+import LinearProgress from 'material-ui/LinearProgress';
 import {
   firebaseConnect,
   isLoaded,
@@ -40,7 +41,7 @@ class ChallengeList extends React.Component {
     console.log('rendering challenges');
     console.log(this.props)
     const challengeList = !isLoaded(challenges)
-      ? 'Loading'
+      ? <LinearProgress mode="indeterminate" />
       : isEmpty(challenges)
         ? <Subheader style={{'font-family': 'Roboto'}}>You have no active challenges</Subheader>
         : _.map(challenges, (v, k) =>

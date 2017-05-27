@@ -233,6 +233,24 @@ export function removeUser(userid) {
     }    
 }
 
+export function removeChallengeResponse(cid, id) {
+    return (dispatch, getState, getFirebase) => {
+        const firebase = getFirebase()
+        var removePath = 'challenges/' + cid + '/responses/' + id
+
+        firebase.remove(removePath)
+    }    
+}
+
+export function removeChallenge(cid) {
+    return (dispatch, getState, getFirebase) => {
+        const firebase = getFirebase()
+        var removePath = 'challenges/' + cid
+
+        firebase.remove(removePath)
+    }    
+}
+
 function sendNotification(notification) {
     return (dispatch, getState, getFirebase) => {
         const firebase = getFirebase()

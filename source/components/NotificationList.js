@@ -5,6 +5,7 @@ import { fetchChallengesIfNeeded } from '../actions'
 import Subheader from 'material-ui/Subheader';
 import Divider from 'material-ui/Divider';
 import { connect } from 'react-redux'
+import LinearProgress from 'material-ui/LinearProgress';
 import {
   firebaseConnect,
   isLoaded,
@@ -42,7 +43,7 @@ export default class NotificationList extends React.Component {
     console.log('rendering notifications');
     console.log(this.props)
     const notificationsList = !isLoaded(notifications)
-      ? 'Loading'
+      ? <LinearProgress mode="indeterminate" />
       : isEmpty(notifications)
         ? <p style={{"padding-left": "16px"}}>You have no notifications</p>
         : _.map(notifications, (v, k) =>
