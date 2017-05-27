@@ -262,3 +262,18 @@ function sendNotification(notification) {
             .update(firebasePath, payload)
     } 
 }
+
+export function addFeedback(id, user_id, response) {
+    return (dispatch, getState, getFirebase) => {
+        const firebase = getFirebase()
+        const firebasePath = 'feedback'
+        var payload = {
+            [id]: {
+                user: user_id,
+                response: response
+            }
+        }
+        firebase
+            .update(firebasePath, payload)
+    } 
+}

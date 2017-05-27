@@ -46,14 +46,11 @@ class UserList extends React.Component {
             <Sharing/>
           </div>
         : _.map(users, (v, k) =>
-          <div>
-            <User
-              key={k}
-              id={k}
-              {...v}
-            />
-            <Divider inset={true} />
-          </div>
+          <User
+            key={k}
+            id={k}
+            {...v}
+          />
         )
       return(
         <div>

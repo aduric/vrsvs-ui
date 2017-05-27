@@ -17,6 +17,7 @@ import Badge from 'material-ui/Badge';
 import NotificationsIcon from 'material-ui/svg-icons/social/notifications';
 import VisibleNotificationList from '../containers/VisibleNotificationList';
 import PointsBadge from './PointsBadge';
+import Feedback from './Feedback';
 import HomeIcon from './HomeIcon';
 import RaisedButton from 'material-ui/RaisedButton';
 import SvgIcon from 'material-ui/SvgIcon';
@@ -35,6 +36,7 @@ class App extends React.Component {
   constructor(props, context) {
     super(props, context)
     this.state = {
+      open: false,
       profile: props.auth.getProfile(),
       isLoggedIn: props.auth.loggedIn()
     }
@@ -49,6 +51,15 @@ class App extends React.Component {
       props.dispatch(push('/'))
     })
   }
+  feedbackOpen() {
+    this.setState(
+      {
+        open: true,
+      });
+  }
+  feedbackClose() {  
+    this.setState({open: false});  
+  }
   login() {
     this.props.auth.login()
   }
@@ -60,8 +71,16 @@ class App extends React.Component {
     this.props.auth.logout();
     this.props.dispatch(removeUser(this.state.profile.user_id));
   }
+  leaveFeedback() {
+    this.feedbackOpen()
+  }
   render() {
       return(
+        <div>
+        <Feedback 
+          open={this.state.open}
+          handleOpen={() => this.feedbackOpen()}
+          handleClose={() => this.feedbackClose()}/>
         <AppBar 
           title={'vrsvs'}
           iconElementLeft={
@@ -92,6 +111,7 @@ class App extends React.Component {
               <MenuItem href="users" primaryText="Users" />
               <MenuItem href="challenges" primaryText="My Challenges" />
               <MenuItem href="subscribed" primaryText="Created Challenges" />
+              <MenuItem href="#" primaryText="Leave Feedback" onTouchTap={() => this.leaveFeedback()} style={{color: 'red'}} />
             </IconMenu>
           </ToolbarGroup>
           : 
@@ -100,6 +120,7 @@ class App extends React.Component {
           </ToolbarGroup>
           }
         </AppBar>
+        </div>
       );      
   }
 }
